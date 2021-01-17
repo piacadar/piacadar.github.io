@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en" data-theme=""><head>
+    <title> Pia Cadar | Modeling, Inference, Prediction </title>
+
+    
+    <meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="description" content="Call me Pia">
+    
+    <link rel="stylesheet"
+          href="/css/style.min.1b320c0791722ac0a6fdde1a95f96f83202fa700fec413f074399ec757ac5bed.css"
+          integrity="sha256-GzIMB5FyKsCm/d4alflvgyAvpwD&#43;xBPwdDmex1esW&#43;0="
+          crossorigin="anonymous"
+          type="text/css">
+    
+    <link rel="stylesheet"
+        href="/css/markupHighlight.min.9755453ffb7bc4cd220f86ebb5922107b49f193cc62fc17e9785d27b33a8bf5b.css"
+        integrity="sha256-l1VFP/t7xM0iD4brtZIhB7SfGTzGL8F&#43;l4XSezOov1s="
+        crossorigin="anonymous"
+        type="text/css">
+    
+    <link rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" 
+    integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" 
+    crossorigin="anonymous" />
+
+    
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+    <link rel="canonical" href="/post/project2/">
+
+    
+    
+    
+    
+    <script type="text/javascript"
+            src="/js/anatole-header.min.d8599ee07b7d3f11bafbac30657ccc591e8d7fd36a9f580cd4c09e24e0e4a971.js"
+            integrity="sha256-2Fme4Ht9PxG6&#43;6wwZXzMWR6Nf9Nqn1gM1MCeJODkqXE="
+            crossorigin="anonymous"></script>
+
+
+    
+        
+        
+        <script type="text/javascript"
+                src="/js/anatole-theme-switcher.min.e289e9ebb2a4e7a7f895859c8a2b0da2de1ec73f22cea58d8475aa0597023837.js"
+                integrity="sha256-4onp67Kk56f4lYWciisNot4exz8izqWNhHWqBZcCODc="
+                crossorigin="anonymous"></script>
+    
+    <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/images/site-feature-image.png"/>
+
+<meta name="twitter:title" content="Modeling, Inference, Prediction"/>
+<meta name="twitter:description" content="I chose the Affairs dataset. The main variables I will be looking at will be affairs, gender, age, and yearsmarried."/>
+
+</head>
+<body><div class="sidebar animated fadeInDown ">
+    <div class="logo-title">
+        <div class="title">
+            <img src="/images/profile.JPG" alt="profile picture">
+            <h3 title=""><a href="/">I&#39;m Pia Cadar</a></h3>
+            <div class="description">
+                <p>Call me Pia</p>
+            </div>
+        </div>
+    </div>
+    <ul class="social-links">
+        
+            <li>
+                <a href="https://github.com/piacadar" rel="me" aria-label="GitHub">
+                    <i class="fab fa-github fa-2x" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            <li>
+                <a href="mailto:pia.cadar@gmail.com" rel="me" aria-label="e-mail">
+                    <i class="fas fa-envelope fa-2x" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+    </ul>
+    <div class="footer">
+        <div class="by_farbox">&copy; Pia Cadar  2021 </div>
+    </div>
+</div>
+<div class="main">
+    <div class="page-top  animated fadeInDown ">
+    <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+    </a>
+    <ul class="nav" id="navMenu">
+        
+        
+            
+            <li><a 
+                   href="/"
+                        
+                   title="">Home</a></li>
+        
+            
+            <li><a 
+                   href="/post/"
+                        
+                   title="">Posts</a></li>
+        
+            
+            <li><a 
+                   href="/about/"
+                        
+                   title="">About</a></li>
+        
+            
+            <li><a 
+                   href="/contact/"
+                        
+                   title="">Contact</a></li>
+        
+            
+            <li><a 
+                   href="/resume/"
+                        
+                   title="">Resume</a></li>
+        
+        
+        
+            <li class="theme-switch-item">
+                <a class="theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+    <div class="autopagerize_page_element">
+        <div class="content">
+    <div class="post  animated fadeInDown ">
+        <div class="post-content">
+            
+            <div class="post-title">
+                <h3>Modeling, Inference, Prediction</h3>
+                
+                    <div class="info">
+                        <em class="fas fa-calendar-day"></em>
+                        <span class="date"> Sat, Nov 21, 2020 
+                                           </span>
+                        <em class="fas fa-stopwatch"></em>
+                        <span class="reading-time">12-minute read</span>
+                    </div>
+                
+            </div>
+
+            
+
+
+<p><em>I chose the Affairs dataset. The main variables I will be looking at will be affairs, gender, age, and yearsmarried. Affairs refers to whether the married person had an affair or not, and yearsmarried is the amount of years the person has been married. There are 601 individual observations in this dataset before any data prep. </em></p>
+<pre class="r"><code>#import libraries
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+#install.packages(&#39;gridExtra&#39;)
+library(gridExtra)</code></pre>
+<div id="finding-number-of-specific-observations" class="section level2">
+<h2>Finding number of specific observations</h2>
+<pre><code>## [1] 601</code></pre>
+</div>
+<div id="q1.-manova-testing" class="section level2">
+<h2>Q1. MANOVA testing</h2>
+<pre class="r"><code>#checking MANOVA assumptions
+
+#install.packages(&#39;rstatix&#39;)
+library(rstatix)
+
+group &lt;- affairs$gender 
+DVs &lt;- affairs %&gt;% select(yearsmarried, age, affairs)
+
+#Test multivariate normality for each group (null: assumption met)
+sapply(split(DVs,group), mshapiro_test)</code></pre>
+<pre><code>##           female      male        
+## statistic 0.8581947   0.9402423   
+## p.value   2.31467e-16 2.329572e-09</code></pre>
+<pre class="r"><code>#If any p&lt;.05, stop (assumption violated). If not, test homogeneity of covariance matrices
+
+#Box&#39;s M test (null: homogeneity of vcov mats assumption met)
+#box_m(DVs, group)
+
+#Optionally View covariance matrices for each group
+#lapply(split(DVs,group), cov)</code></pre>
+<pre class="r"><code>#running MANOVA test
+man1&lt;-manova(cbind(yearsmarried, age, affairs)~gender, data=affairs)
+
+summary(man1)</code></pre>
+<pre><code>##            Df Pillai approx F num Df den Df    Pr(&gt;F)    
+## gender      1 0.0723   15.509      3    597 1.001e-09 ***
+## Residuals 599                                            
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>#running ANOVA to find response variable
+summary.aov(man1)</code></pre>
+<pre><code>##  Response yearsmarried :
+##              Df  Sum Sq Mean Sq F value Pr(&gt;F)
+## gender        1    17.1  17.078  0.5498 0.4587
+## Residuals   599 18606.6  31.063               
+## 
+##  Response age :
+##              Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## gender        1   1881 1881.48  22.591 2.512e-06 ***
+## Residuals   599  49887   83.28                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##  Response affairs :
+##              Df Sum Sq Mean Sq F value Pr(&gt;F)
+## gender        1    0.9  0.8993  0.0825  0.774
+## Residuals   599 6528.2 10.8985</code></pre>
+<pre class="r"><code>#Look at mean differences
+affairs %&gt;% group_by(gender) %&gt;% summarize(mean(yearsmarried), mean(age), mean(affairs))</code></pre>
+<pre><code>## # A tibble: 2 x 4
+##   gender `mean(yearsmarried)` `mean(age)` `mean(affairs)`
+##   &lt;fct&gt;                 &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;
+## 1 female                 8.02        30.8            1.42
+## 2 male                   8.35        34.3            1.50</code></pre>
+<pre class="r"><code>#run all t test to find which groups differ for each response variable
+pairwise.t.test(affairs$yearsmarried, affairs$gender, p.adj=&quot;none&quot;)</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  affairs$yearsmarried and affairs$gender 
+## 
+##      female
+## male 0.46  
+## 
+## P value adjustment method: none</code></pre>
+<pre class="r"><code>pairwise.t.test(affairs$age, affairs$gender, p.adj=&quot;none&quot;)</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  affairs$age and affairs$gender 
+## 
+##      female 
+## male 2.5e-06
+## 
+## P value adjustment method: none</code></pre>
+<pre class="r"><code>pairwise.t.test(affairs$affairs, affairs$gender, p.adj=&quot;none&quot;)</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  affairs$affairs and affairs$gender 
+## 
+##      female
+## male 0.77  
+## 
+## P value adjustment method: none</code></pre>
+<p><em>At least one species differs for the response variable. Only age shows group differences.1 MANOVA, 3 ANOVAS, 6 t-tests (10 tests) were performed. The probability of at least one type I error is: 1-0.95^10 = 0.401. With the Bonferroni correction, the Type 1 error rate is: α = 0.05/10 = 0.005. Everything is still significant even using the conservative α. MANOVA assumptions were not met.</em></p>
+</div>
+<div id="q2.-randomized-tests" class="section level2">
+<h2>Q2. Randomized Tests</h2>
+<pre class="r"><code>#install.packages(&quot;vegan&quot;)
+library(vegan)
+dists &lt;- affairs %&gt;% select(yearsmarried, age, affairs) %&gt;% dist
+adonis(dists~gender,data=affairs)</code></pre>
+<pre><code>## 
+## Call:
+## adonis(formula = dists ~ gender, data = affairs) 
+## 
+## Permutation: free
+## Number of permutations: 999
+## 
+## Terms added sequentially (first to last)
+## 
+##            Df SumsOfSqs MeanSqs F.Model      R2 Pr(&gt;F)    
+## gender      1      1899 1899.46  15.166 0.02469  0.001 ***
+## Residuals 599     75022  125.25         0.97531           
+## Total     600     76921                 1.00000           
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>table(affairs$gender)</code></pre>
+<pre><code>## 
+## female   male 
+##    315    286</code></pre>
+<pre class="r"><code>#compute observed F
+SST&lt;- sum(dists^2)/601
+SSW&lt;-affairs%&gt;%group_by(gender)%&gt;%select(gender, yearsmarried, age, affairs) %&gt;%
+do(d=dist(.[-1],&quot;euclidean&quot;))%&gt;%ungroup()%&gt;% summarize(sum(d[[1]]^2)/315 + sum(d[[2]]^2)/286) %&gt;% pull
+F_obs&lt;-((SST-SSW)/1)/(SSW/599) #observed F statistic
+
+Fs&lt;-replicate(1000,{
+  new &lt;- affairs%&gt;%mutate(gender=sample(gender)) #permute the species vector 
+  SSW &lt;- new%&gt;%group_by(gender) %&gt;% select(gender,yearsmarried, age, affairs) %&gt;%
+  do(d=dist(.[-1],&quot;euclidean&quot;)) %&gt;% ungroup() %&gt;%
+    summarize(sum(d[[1]]^2)/315 + sum(d[[2]]^2)/286) %&gt;% pull
+  ((SST-SSW)/1)/(SSW/599) #calculate new F on randomized data
+})
+
+{hist(Fs,prob = T); abline(v=F_obs, col=&quot;red&quot;, add=T)}</code></pre>
+<p><img src="/post/project2_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>mean(Fs &gt; F_obs)</code></pre>
+<pre><code>## [1] 0</code></pre>
+<p><em>H0 : For each response variable, the means of all groups are equal. HA : For at least 1 response variable, at least 1 group mean differs. The results from the randomized test were significant, indicating that the null hypothesis can be rejected, and that at least 1 group mean differs for at least 1 response variable. In 1000 replications, there was never a value as big as <span class="math inline">\(F_{obs}\)</span>. Thus, the empirical p-value is 0 (definitely reject the null hypothesis). The p-value from running adonis was also significant, indicating again that the null hypothesis should be rejected.</em></p>
+</div>
+<div id="q3.-linear-regression-model" class="section level2">
+<h2>Q3. Linear Regression Model</h2>
+<pre class="r"><code>affairs$yearsmarried_c &lt;- affairs$yearsmarried - mean(affairs$yearsmarried)
+fit&lt;-lm(age ~ gender*yearsmarried_c, data=affairs)
+summary(fit)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = age ~ gender * yearsmarried_c, data = affairs)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -15.8015  -3.3022  -0.5854   2.3949  19.4425 
+## 
+## Coefficients:
+##                           Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)               31.00409    0.31806  97.480  &lt; 2e-16 ***
+## gendermale                 3.10694    0.46109   6.738 3.78e-11 ***
+## yearsmarried_c             1.26072    0.05659  22.279  &lt; 2e-16 ***
+## gendermale:yearsmarried_c  0.05842    0.08293   0.704    0.481    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 5.643 on 597 degrees of freedom
+## Multiple R-squared:  0.6328, Adjusted R-squared:  0.631 
+## F-statistic:   343 on 3 and 597 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>affairs %&gt;% ggplot(aes(yearsmarried,age,color=gender))+geom_point()+geom_smooth(method=&quot;lm&quot;, se=F)</code></pre>
+<p><img src="/post/project2_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#checking assumptions of regression
+resids&lt;-fit$residuals
+fitvals&lt;-fit$fitted.values
+
+#linearity
+data.frame(resids,fitvals)%&gt;%ggplot(aes(fitvals,resids))+geom_point()+geom_hline(yintercept=0)</code></pre>
+<p><img src="/post/project2_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#normality
+par(mfrow=c(1,2)); hist(resids); qqnorm(resids); qqline(resids, col=&#39;red&#39;)</code></pre>
+<p><img src="/post/project2_files/figure-html/unnamed-chunk-8-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#homoskedasticity
+ggplot(affairs,aes(yearsmarried,age,color=gender))+geom_point()</code></pre>
+<p><img src="/post/project2_files/figure-html/unnamed-chunk-8-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#install.packages(&quot;sandwich&quot;);install.packages(&quot;lmtest&quot;)
+library(sandwich); library(lmtest)
+summary(fit)$coef[,1:2]</code></pre>
+<pre><code>##                              Estimate Std. Error
+## (Intercept)               31.00409144 0.31805524
+## gendermale                 3.10694193 0.46108535
+## yearsmarried_c             1.26072091 0.05658748
+## gendermale:yearsmarried_c  0.05841551 0.08292903</code></pre>
+<pre class="r"><code>coeftest(fit, vcov = vcovHC(fit))</code></pre>
+<pre><code>## 
+## t test of coefficients:
+## 
+##                            Estimate Std. Error  t value  Pr(&gt;|t|)    
+## (Intercept)               31.004091   0.286019 108.3987 &lt; 2.2e-16 ***
+## gendermale                 3.106942   0.468310   6.6344 7.316e-11 ***
+## yearsmarried_c             1.260721   0.055359  22.7736 &lt; 2.2e-16 ***
+## gendermale:yearsmarried_c  0.058416   0.091326   0.6396    0.5227    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p><em>The intercept of 31.00409 is the predicted Age for Females whose yearsmarried is average. For every one unit increase in yearsmarried, there is a 1.26072 unit increase in Age, on average. For people with average number of yearsmarred, Males have average/predicted Age that is 3.10694 greater than Females. Slope of yearsmarried on Age for Males is 0.05842 greater than for Females. All assumptions were met. After recomputing with robust SEs, the SE increased for the gendermale and gendermale:yearsmarried_c, but decreased (by a little) for yearsmarried_c. R-squared says 63.3% of variability in Age is explained.</em></p>
+</div>
+<div id="bootstrapped-standard-errors" class="section level2">
+<h2>Bootstrapped Standard Errors</h2>
+<pre class="r"><code># here&#39;s a way to sample people/rows from your dataset with replacement
+boot_dat&lt;- sample_frac(affairs, replace=T)
+
+# repeat 5000 times
+samp_distn&lt;-replicate(5000, {
+  boot_dat &lt;- sample_frac(affairs, replace=T) #take bootstrap sample of rows
+  fit_new &lt;- lm(age~yearsmarried*gender, data=boot_dat) #fit model on bootstrap sample
+  coef(fit_new) #save coefs
+}) 
+ 
+## Estimated/boostrap SEs
+samp_distn %&gt;% t %&gt;% as.data.frame %&gt;% summarize_all(sd) </code></pre>
+<pre><code>##   (Intercept) yearsmarried gendermale yearsmarried:gendermale
+## 1    0.338004   0.05645538  0.6840794              0.09280049</code></pre>
+<pre class="r"><code>## Empirical 95% CI
+samp_distn %&gt;% t %&gt;% as.data.frame %&gt;% pivot_longer(1:3) %&gt;% group_by(name) %&gt;%
+ summarize(lower=quantile(value,.025), upper=quantile(value,.975))</code></pre>
+<pre><code>## # A tibble: 3 x 3
+##   name         lower upper
+##   &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt;
+## 1 (Intercept)  20.0  21.4 
+## 2 gendermale    1.28  3.96
+## 3 yearsmarried  1.15  1.37</code></pre>
+<pre class="r"><code>#comparison of SEs
+## Normal-theory SEs
+coeftest(fit)</code></pre>
+<pre><code>## 
+## t test of coefficients:
+## 
+##                            Estimate Std. Error t value  Pr(&gt;|t|)    
+## (Intercept)               31.004091   0.318055 97.4802 &lt; 2.2e-16 ***
+## gendermale                 3.106942   0.461085  6.7383  3.78e-11 ***
+## yearsmarried_c             1.260721   0.056587 22.2791 &lt; 2.2e-16 ***
+## gendermale:yearsmarried_c  0.058416   0.082929  0.7044    0.4815    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>## Heteroskedasticity Robust SEs
+coeftest(fit, vcov=vcovHC(fit))</code></pre>
+<pre><code>## 
+## t test of coefficients:
+## 
+##                            Estimate Std. Error  t value  Pr(&gt;|t|)    
+## (Intercept)               31.004091   0.286019 108.3987 &lt; 2.2e-16 ***
+## gendermale                 3.106942   0.468310   6.6344 7.316e-11 ***
+## yearsmarried_c             1.260721   0.055359  22.7736 &lt; 2.2e-16 ***
+## gendermale:yearsmarried_c  0.058416   0.091326   0.6396    0.5227    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>## Bootstrapped SEs (resampling rows)
+samp_distn%&gt;%t%&gt;%as.data.frame%&gt;%summarize_all(sd)</code></pre>
+<pre><code>##   (Intercept) yearsmarried gendermale yearsmarried:gendermale
+## 1    0.338004   0.05645538  0.6840794              0.09280049</code></pre>
+<p><em>The SEs between all the tests were similar, with Heteroskedasticity SEs begin in the middle and Bootstrapped SEs being the largest. While the p-values changed between the Normal-theory SEs and Heteroskedasticity SEs, they values were still significant.</em></p>
+</div>
+<div id="q5.-logistic-regression" class="section level2">
+<h2>Q5. Logistic Regression</h2>
+<pre class="r"><code>affairs_data&lt;-affairs%&gt;%mutate(y=ifelse(children ==&quot;yes&quot;,1,0))
+fit_log&lt;-glm(y~yearsmarried+affairs,data=affairs_data,family=binomial(link=&quot;logit&quot;)) 
+coeftest(fit_log)</code></pre>
+<pre><code>## 
+## z test of coefficients:
+## 
+##               Estimate Std. Error z value  Pr(&gt;|z|)    
+## (Intercept)  -1.202593   0.181016 -6.6436 3.062e-11 ***
+## yearsmarried  0.357374   0.033135 10.7854 &lt; 2.2e-16 ***
+## affairs      -0.018475   0.041199 -0.4484    0.6538    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>exp(coef(fit_log))</code></pre>
+<pre><code>##  (Intercept) yearsmarried      affairs 
+##    0.3004143    1.4295709    0.9816949</code></pre>
+<pre class="r"><code>#confusion matrix
+# get predicted probabilities
+#install.packages(plotROC)
+library(plotROC)
+affairs_data$prob &lt;- predict(fit_log,type=&quot;response&quot;)
+
+# predicted outcomes (if prob&gt;.5, predict malignant, otherwise predict benign)
+# affairs_data$predicted &lt;- ifelse(affairs_data$prob&gt;.5,&quot;Children&quot;,&quot;No Children&quot;)
+affairs_data&lt;-affairs_data%&gt;%mutate(prob=predict(fit_log, type=&quot;response&quot;), prediction=ifelse(prob&gt;.5,1,0))
+table(predict=as.numeric(affairs_data$prob&gt;.5),truth=affairs_data$y)%&gt;%addmargins</code></pre>
+<pre><code>##        truth
+## predict   0   1 Sum
+##     0   109  31 140
+##     1    62 399 461
+##     Sum 171 430 601</code></pre>
+<pre class="r"><code>#table(truth=affairs_data$children, prediction=affairs$predicted)%&gt;%addmargins
+
+#accuracy
+(109 + 399)/601</code></pre>
+<pre><code>## [1] 0.8452579</code></pre>
+<pre class="r"><code>#tpr
+399/430</code></pre>
+<pre><code>## [1] 0.927907</code></pre>
+<pre class="r"><code>#tnr
+109/171</code></pre>
+<pre><code>## [1] 0.6374269</code></pre>
+<pre class="r"><code>#ppv
+399/461</code></pre>
+<pre><code>## [1] 0.8655098</code></pre>
+<pre class="r"><code>classify&lt;-affairs_data%&gt;%transmute(prob,prediction,truth=y)
+ROCplot&lt;-ggplot(classify)+geom_roc(aes(d=truth,m=prob), n.cuts=0) 
+ROCplot</code></pre>
+<p><img src="/post/project2_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>calc_auc(ROCplot)</code></pre>
+<pre><code>##   PANEL group       AUC
+## 1     1    -1 0.8725554</code></pre>
+<pre class="r"><code>#density plot 
+affairs_data$logit&lt;-predict(fit_log,type=&quot;link&quot;) #get predicted logit/log-odds for everyone
+
+## Density plot of log-odds for each outcome:
+
+affairs_data%&gt;%ggplot()+geom_density(aes(logit,color=children,fill=children), alpha=.4)+
+  theme(legend.position=c(.85,.85))+geom_vline(xintercept=0)+xlab(&quot;logit (log-odds)&quot;)+
+  geom_rug(aes(logit,color=children))</code></pre>
+<p><img src="/post/project2_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><em>Every one-unit increase in yearsmarried multiplies odds by 1.43. Every one-unit increase in affairs multiplies odds by 0.982. The Accuracy = 0.845, TPR = 0.928, TNR = 0.637, PPV = 0.866, and AUC = 0.873. Our AUC isn’t the best, but it is still a good value.</em></p>
+<p>##Q6. Logistic Regression for all variables</p>
+<pre class="r"><code>affairs_new&lt;-affairs%&gt;%mutate(y=ifelse(children==&quot;yes&quot;,1,0))
+affairs_new$children &lt;- NULL
+fit4 &lt;- glm(y~., data=affairs_new, family=&quot;binomial&quot;)
+prob2 &lt;- predict(fit4)
+
+class_diag &lt;- function(probs,truth){
+  #CONFUSION MATRIX: CALCULATE ACCURACY, TPR, TNR, PPV
+  tab&lt;-table(factor(probs&gt;.5,levels=c(&quot;FALSE&quot;,&quot;TRUE&quot;)),truth)
+  acc=sum(diag(tab))/sum(tab)
+  sens=tab[2,2]/colSums(tab)[2]
+  spec=tab[1,1]/colSums(tab)[1]
+  ppv=tab[2,2]/rowSums(tab)[2]
+  f1=2*(sens*ppv)/(sens+ppv)
+
+  if(is.numeric(truth)==FALSE &amp; is.logical(truth)==FALSE) truth&lt;-as.numeric(truth)-1
+  
+  #CALCULATE EXACT AUC
+  ord&lt;-order(probs, decreasing=TRUE)
+  probs &lt;- probs[ord]; truth &lt;- truth[ord]
+  
+  TPR=cumsum(truth)/max(1,sum(truth)) 
+  FPR=cumsum(!truth)/max(1,sum(!truth))
+  
+  dup&lt;-c(probs[-1]&gt;=probs[-length(probs)], FALSE)
+  TPR&lt;-c(0,TPR[!dup],1); FPR&lt;-c(0,FPR[!dup],1)
+  n &lt;- length(TPR)
+  auc&lt;- sum( ((TPR[-1]+TPR[-n])/2) * (FPR[-1]-FPR[-n]) )
+
+  data.frame(acc,sens,spec,ppv,f1,auc)
+}
+
+truth = affairs_new$y
+class_diag(prob2, truth)</code></pre>
+<pre><code>##         acc      sens      spec       ppv        f1       auc
+## 1 0.8053245 0.8093023 0.7953216 0.9086162 0.8560886 0.8878417</code></pre>
+<pre class="r"><code>table(prediction=as.numeric(prob2&gt;.5), truth)%&gt;% addmargins()</code></pre>
+<pre><code>##           truth
+## prediction   0   1 Sum
+##        0   136  82 218
+##        1    35 348 383
+##        Sum 171 430 601</code></pre>
+<pre class="r"><code>set.seed(1234)
+k=10
+
+# your code here
+## k-fold CV
+
+data_CV&lt;-affairs_new[sample(nrow(affairs_new)),] #randomly order rows
+folds&lt;-cut(seq(1:nrow(affairs_new)),breaks=k,labels=F) #create folds
+
+diags&lt;-NULL
+for(i in 1:k){
+  ## Create training and test sets
+  train&lt;-data_CV[folds!=i,] 
+  test&lt;-data_CV[folds==i,]
+  
+  truth1&lt;-test$y ## Truth labels for fold i
+  
+  ## Train model on training set (all but fold i)
+  fitCV1&lt;-glm(y~.,data=train,family=&quot;binomial&quot;)
+  
+  ## Test model on test set (fold i) 
+  probs_CV&lt;-predict(fitCV1,newdata = test,type=&quot;response&quot;)
+  
+  ## Get diagnostics for fold i
+  diags&lt;-rbind(diags,class_diag(probs_CV,truth1))
+}
+
+
+summarize_all(diags,mean) #average diagnostics across all k folds</code></pre>
+<pre><code>##         acc      sens      spec       ppv        f1      auc
+## 1 0.8304098 0.8975902 0.6620309 0.8706699 0.8830608 0.875851</code></pre>
+<pre class="r"><code>library(glmnet)
+set.seed(1234)
+# your code here
+y&lt;-as.matrix(affairs$children) #grab response
+x&lt;-model.matrix(children~.,data=affairs)[,-1] #predictors (drop intercept)
+head(x)</code></pre>
+<pre><code>##    X affairs gendermale age yearsmarried religiousness education occupation
+## 1  4       0          1  37        10.00             3        18          7
+## 2  5       0          0  27         4.00             4        14          6
+## 3 11       0          0  32        15.00             1        12          1
+## 4 16       0          1  57        15.00             5        18          6
+## 5 23       0          1  22         0.75             2        17          6
+## 6 29       0          0  32         1.50             2        17          5
+##   rating yearsmarried_c
+## 1      4       1.822304
+## 2      4      -4.177696
+## 3      4       6.822304
+## 4      5       6.822304
+## 5      3      -7.427696
+## 6      5      -6.677696</code></pre>
+<pre class="r"><code>x &lt;- scale(x)
+
+cv &lt;- cv.glmnet(x,y, family=&quot;binomial&quot;)
+lasso&lt;-glmnet(x,y,family=&quot;binomial&quot;,lambda=cv$lambda.1se)
+coef(lasso)</code></pre>
+<pre><code>## 11 x 1 sparse Matrix of class &quot;dgCMatrix&quot;
+##                           s0
+## (Intercept)     1.3034873154
+## X               .           
+## affairs         .           
+## gendermale      .           
+## age             .           
+## yearsmarried    1.3520011551
+## religiousness   .           
+## education       .           
+## occupation     -0.0349329259
+## rating          .           
+## yearsmarried_c  0.0008789886</code></pre>
+<pre class="r"><code># prob_lasso &lt;- predict(lasso_fit, poke_preds, type=&quot;response&quot;)
+# class_diag(prob_lasso, truth)
+# table(prediction=as.numeric(prob_lasso&gt;.5), truth)</code></pre>
+<pre class="r"><code>#Lasso CV
+set.seed(1234)
+k=10 #choose number of folds
+data1&lt;-affairs %&gt;% sample_frac
+folds &lt;- ntile(1:nrow(data1),n=10)
+
+diags&lt;-NULL 
+for(i in 1:k){
+  train&lt;-data1[folds!=i,] 
+  test&lt;-data1[folds==i,]
+  truth &lt;- test$children
+  fit5&lt;-glm(children~yearsmarried + yearsmarried_c, data=train, family=&quot;binomial&quot;) 
+  probs5 &lt;- predict(fit5, newdata=test, type=&quot;response&quot;)
+  yhat&lt;-predict(fit5,newdata=test)
+  diags&lt;-rbind(diags,class_diag(probs5,truth))
+  }
+diags%&gt;%summarize_all(mean)</code></pre>
+<pre><code>##         acc      sens      spec       ppv        f1       auc
+## 1 0.8453825 0.9275295 0.6396313 0.8667052 0.8949998 0.8731716</code></pre>
+<p><em>In-sample classification diagnostics: ACC = 0.805, TPR = 0.809, TNR = 0.795, PPV = 0.909, AUC = 0.888. Out-of-sample classification diagnostics: ACC = 0.830, TPR = 0.898, TNR = 0.662, PPV = 0.871, AUC = 0.876. The in-sample diagnostic had a slightly better AUC value than the out-of-sample diagnostic. Yearsmarried and yearsmarried_c are the only variables which are the most predictive of children. CV on Lasso: ACC = 0.845, TPR = 0.928, TNR = 0.640, PPV = 0.867, AUC = 0.873. Our AUC value for the Lasso model was the lowest value out of all the classification diagnostics.</em></p>
+<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+<pre><code>## R version 3.6.2 (2019-12-12)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS  10.16
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] glmnet_4.0-2    Matrix_1.2-18   plotROC_2.2.1   lmtest_0.9-38  
+##  [5] zoo_1.8-8       sandwich_3.0-0  vegan_2.5-7     lattice_0.20-41
+##  [9] permute_0.9-5   rstatix_0.6.0   gridExtra_2.3   forcats_0.5.0  
+## [13] stringr_1.4.0   dplyr_1.0.2     purrr_0.3.4     readr_1.4.0    
+## [17] tidyr_1.1.2     tibble_3.0.4    ggplot2_3.3.2   tidyverse_1.3.0
+## 
+## loaded via a namespace (and not attached):
+##  [1] nlme_3.1-150      fs_1.5.0          lubridate_1.7.9.2 httr_1.4.2       
+##  [5] tools_3.6.2       backports_1.2.0   utf8_1.1.4        R6_2.5.0         
+##  [9] DBI_1.1.0         mgcv_1.8-33       colorspace_2.0-0  withr_2.3.0      
+## [13] tidyselect_1.1.0  curl_4.3          compiler_3.6.2    cli_2.2.0        
+## [17] rvest_0.3.6       xml2_1.3.2        labeling_0.4.2    bookdown_0.21    
+## [21] scales_1.1.1      digest_0.6.27     foreign_0.8-72    rmarkdown_2.6    
+## [25] rio_0.5.16        pkgconfig_2.0.3   htmltools_0.5.0   dbplyr_2.0.0     
+## [29] rlang_0.4.9       readxl_1.3.1      rstudioapi_0.13   shape_1.4.5      
+## [33] generics_0.1.0    farver_2.0.3      jsonlite_1.7.1    zip_2.1.1        
+## [37] car_3.0-10        magrittr_2.0.1    Rcpp_1.0.5        munsell_0.5.0    
+## [41] fansi_0.4.1       abind_1.4-5       lifecycle_0.2.0   stringi_1.5.3    
+## [45] yaml_2.2.1        carData_3.0-4     MASS_7.3-53       plyr_1.8.6       
+## [49] grid_3.6.2        parallel_3.6.2    crayon_1.3.4      haven_2.3.1      
+## [53] splines_3.6.2     hms_0.5.3         knitr_1.30        pillar_1.4.7     
+## [57] codetools_0.2-18  reprex_0.3.0      glue_1.4.2        evaluate_0.14    
+## [61] blogdown_0.20     data.table_1.13.2 modelr_0.1.8      foreach_1.5.1    
+## [65] vctrs_0.3.5       cellranger_1.1.0  gtable_0.3.0      assertthat_0.2.1 
+## [69] xfun_0.20         openxlsx_4.2.3    broom_0.7.2       survival_3.2-7   
+## [73] iterators_1.0.13  cluster_2.1.0     ellipsis_0.3.1</code></pre>
+<pre><code>## [1] &quot;2021-01-16 21:07:24 CST&quot;</code></pre>
+<pre><code>##                                                                                            sysname 
+##                                                                                           &quot;Darwin&quot; 
+##                                                                                            release 
+##                                                                                           &quot;20.2.0&quot; 
+##                                                                                            version 
+## &quot;Darwin Kernel Version 20.2.0: Wed Dec  2 20:39:59 PST 2020; root:xnu-7195.60.75~1/RELEASE_X86_64&quot; 
+##                                                                                           nodename 
+##                                                                                            &quot;earth&quot; 
+##                                                                                            machine 
+##                                                                                           &quot;x86_64&quot; 
+##                                                                                              login 
+##                                                                                             &quot;root&quot; 
+##                                                                                               user 
+##                                                                                         &quot;piacadar&quot; 
+##                                                                                     effective_user 
+##                                                                                         &quot;piacadar&quot;</code></pre>
+</div>
+</div>
+        <div class="post-footer">
+            <div class="info">
+                
+                
+            </div>
+        </div>
+
+        
+    </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript"
+        src="/js/jquery.min.86b1e8f819ee2d9099a783e50b49dff24282545fc40773861f9126b921532e4c.js"
+        integrity="sha256-hrHo&#43;BnuLZCZp4PlC0nf8kKCVF/EB3OGH5EmuSFTLkw="
+        crossorigin="anonymous"></script>
+
+
+
+
+<script type="text/javascript"
+        src="/js/bundle.min.0f9c74cb78f13d1f15f33daff4037c70354f98acfbb97a6f61708966675c3cae.js"
+        integrity="sha256-D5x0y3jxPR8V8z2v9AN8cDVPmKz7uXpvYXCJZmdcPK4="
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript"
+        src="/js/medium-zoom.min.92f21c856129f84aeb719459b3e6ac621a3032fd7b180a18c04e1d12083f8aba.js"
+        integrity="sha256-kvIchWEp&#43;ErrcZRZs&#43;asYhowMv17GAoYwE4dEgg/iro="
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

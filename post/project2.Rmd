@@ -1,0 +1,353 @@
+---
+title: "Modeling, Inference, Prediction"
+author: "Pia Cadar"
+date: "2020-11-21"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+#DO NOT EDIT THIS CHUNK OR ANYTHING ABOVE IT!
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, fig.align = "center", warning = F, message = F, tidy=T, tidy.opts=list(width.cutoff=50))
+```
+
+*I chose the Affairs dataset. The main variables I will be looking at will be affairs, gender, age, and yearsmarried. Affairs refers to whether the married person had an affair or not, and yearsmarried is the amount of years the person has been married. There are 601 individual observations in this dataset before any data prep. *
+
+```{r cars}
+#import libraries
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+#install.packages('gridExtra')
+library(gridExtra)
+```
+
+## Finding number of specific observations
+
+```{r pressure, echo=FALSE}
+affairs <- read.csv("Affairs.csv")
+nrow(affairs)
+```
+
+## Q1. MANOVA testing
+
+```{r}
+#checking MANOVA assumptions
+
+#install.packages('rstatix')
+library(rstatix)
+
+group <- affairs$gender 
+DVs <- affairs %>% select(yearsmarried, age, affairs)
+
+#Test multivariate normality for each group (null: assumption met)
+sapply(split(DVs,group), mshapiro_test)
+
+#If any p<.05, stop (assumption violated). If not, test homogeneity of covariance matrices
+
+#Box's M test (null: homogeneity of vcov mats assumption met)
+#box_m(DVs, group)
+
+#Optionally View covariance matrices for each group
+#lapply(split(DVs,group), cov)
+```
+
+```{r}
+#running MANOVA test
+man1<-manova(cbind(yearsmarried, age, affairs)~gender, data=affairs)
+
+summary(man1)
+```
+
+```{r}
+#running ANOVA to find response variable
+summary.aov(man1)
+``` 
+
+```{r}
+#Look at mean differences
+affairs %>% group_by(gender) %>% summarize(mean(yearsmarried), mean(age), mean(affairs))
+
+#run all t test to find which groups differ for each response variable
+pairwise.t.test(affairs$yearsmarried, affairs$gender, p.adj="none")
+pairwise.t.test(affairs$age, affairs$gender, p.adj="none")
+pairwise.t.test(affairs$affairs, affairs$gender, p.adj="none")
+```
+
+
+*At least one species differs for the response variable. Only age shows group differences.1 MANOVA, 3 ANOVAS, 6 t-tests (10 tests) were performed. The probability of at least one type I error is: 1-0.95^10 = 0.401. With the Bonferroni correction, the Type 1 error rate is: α = 0.05/10 = 0.005. Everything is still significant even using the conservative α. MANOVA assumptions were not met.*
+
+## Q2. Randomized Tests
+```{r}
+#install.packages("vegan")
+library(vegan)
+dists <- affairs %>% select(yearsmarried, age, affairs) %>% dist
+adonis(dists~gender,data=affairs)
+table(affairs$gender)
+
+#compute observed F
+SST<- sum(dists^2)/601
+SSW<-affairs%>%group_by(gender)%>%select(gender, yearsmarried, age, affairs) %>%
+do(d=dist(.[-1],"euclidean"))%>%ungroup()%>% summarize(sum(d[[1]]^2)/315 + sum(d[[2]]^2)/286) %>% pull
+F_obs<-((SST-SSW)/1)/(SSW/599) #observed F statistic
+
+Fs<-replicate(1000,{
+  new <- affairs%>%mutate(gender=sample(gender)) #permute the species vector 
+  SSW <- new%>%group_by(gender) %>% select(gender,yearsmarried, age, affairs) %>%
+  do(d=dist(.[-1],"euclidean")) %>% ungroup() %>%
+    summarize(sum(d[[1]]^2)/315 + sum(d[[2]]^2)/286) %>% pull
+  ((SST-SSW)/1)/(SSW/599) #calculate new F on randomized data
+})
+
+{hist(Fs,prob = T); abline(v=F_obs, col="red", add=T)}
+mean(Fs > F_obs)
+```
+*H0 : For each response variable, the means of all groups are equal. HA : For at least 1 response variable, at least 1 group mean differs. The results from the randomized test were significant, indicating that the null hypothesis can be rejected, and that at least 1 group mean differs for at least 1 response variable. In 1000 replications, there was never a value as big as $F_{obs}$. Thus, the empirical p-value is 0 (definitely reject the null hypothesis). The p-value from running adonis was also significant, indicating again that the null hypothesis should be rejected.*
+
+## Q3. Linear Regression Model
+```{r}
+affairs$yearsmarried_c <- affairs$yearsmarried - mean(affairs$yearsmarried)
+fit<-lm(age ~ gender*yearsmarried_c, data=affairs)
+summary(fit)
+
+```
+
+```{r}
+affairs %>% ggplot(aes(yearsmarried,age,color=gender))+geom_point()+geom_smooth(method="lm", se=F)
+```
+
+```{r}
+#checking assumptions of regression
+resids<-fit$residuals
+fitvals<-fit$fitted.values
+
+#linearity
+data.frame(resids,fitvals)%>%ggplot(aes(fitvals,resids))+geom_point()+geom_hline(yintercept=0)
+
+#normality
+par(mfrow=c(1,2)); hist(resids); qqnorm(resids); qqline(resids, col='red')
+
+#homoskedasticity
+ggplot(affairs,aes(yearsmarried,age,color=gender))+geom_point()
+
+```
+
+```{r}
+#install.packages("sandwich");install.packages("lmtest")
+library(sandwich); library(lmtest)
+summary(fit)$coef[,1:2]
+coeftest(fit, vcov = vcovHC(fit))
+```
+
+
+
+*The intercept of 31.00409 is the predicted Age for Females whose yearsmarried is average. For every one unit increase in yearsmarried, there is a 1.26072 unit increase in Age, on average. For people with average number of yearsmarred, Males have average/predicted Age that is 3.10694 greater than Females. Slope of yearsmarried on Age for Males is 0.05842 greater than for Females. All assumptions were met. After recomputing with robust SEs, the SE increased for the gendermale and gendermale:yearsmarried_c, but decreased (by a little) for yearsmarried_c. R-squared says 63.3% of variability in Age is explained.*
+
+## Bootstrapped Standard Errors
+```{r}
+# here's a way to sample people/rows from your dataset with replacement
+boot_dat<- sample_frac(affairs, replace=T)
+
+# repeat 5000 times
+samp_distn<-replicate(5000, {
+  boot_dat <- sample_frac(affairs, replace=T) #take bootstrap sample of rows
+  fit_new <- lm(age~yearsmarried*gender, data=boot_dat) #fit model on bootstrap sample
+  coef(fit_new) #save coefs
+}) 
+ 
+## Estimated/boostrap SEs
+samp_distn %>% t %>% as.data.frame %>% summarize_all(sd) 
+
+## Empirical 95% CI
+samp_distn %>% t %>% as.data.frame %>% pivot_longer(1:3) %>% group_by(name) %>%
+ summarize(lower=quantile(value,.025), upper=quantile(value,.975))
+```
+
+```{r}
+#comparison of SEs
+## Normal-theory SEs
+coeftest(fit)
+
+## Heteroskedasticity Robust SEs
+coeftest(fit, vcov=vcovHC(fit))
+
+## Bootstrapped SEs (resampling rows)
+samp_distn%>%t%>%as.data.frame%>%summarize_all(sd)
+```
+*The SEs between all the tests were similar, with Heteroskedasticity SEs begin in the middle and Bootstrapped SEs being the largest. While the p-values changed between the Normal-theory SEs and Heteroskedasticity SEs, they values were still significant.*
+
+## Q5. Logistic Regression
+```{r}
+affairs_data<-affairs%>%mutate(y=ifelse(children =="yes",1,0))
+fit_log<-glm(y~yearsmarried+affairs,data=affairs_data,family=binomial(link="logit")) 
+coeftest(fit_log)
+
+exp(coef(fit_log))
+```
+
+```{r}
+#confusion matrix
+# get predicted probabilities
+#install.packages(plotROC)
+library(plotROC)
+affairs_data$prob <- predict(fit_log,type="response")
+
+# predicted outcomes (if prob>.5, predict malignant, otherwise predict benign)
+# affairs_data$predicted <- ifelse(affairs_data$prob>.5,"Children","No Children")
+affairs_data<-affairs_data%>%mutate(prob=predict(fit_log, type="response"), prediction=ifelse(prob>.5,1,0))
+table(predict=as.numeric(affairs_data$prob>.5),truth=affairs_data$y)%>%addmargins
+
+#table(truth=affairs_data$children, prediction=affairs$predicted)%>%addmargins
+
+#accuracy
+(109 + 399)/601
+
+#tpr
+399/430
+
+#tnr
+109/171
+
+#ppv
+399/461
+
+classify<-affairs_data%>%transmute(prob,prediction,truth=y)
+ROCplot<-ggplot(classify)+geom_roc(aes(d=truth,m=prob), n.cuts=0) 
+ROCplot
+calc_auc(ROCplot)
+```
+
+```{r}
+#density plot 
+affairs_data$logit<-predict(fit_log,type="link") #get predicted logit/log-odds for everyone
+
+## Density plot of log-odds for each outcome:
+
+affairs_data%>%ggplot()+geom_density(aes(logit,color=children,fill=children), alpha=.4)+
+  theme(legend.position=c(.85,.85))+geom_vline(xintercept=0)+xlab("logit (log-odds)")+
+  geom_rug(aes(logit,color=children))
+```
+
+
+*Every one-unit increase in yearsmarried multiplies odds by 1.43. Every one-unit increase in affairs multiplies odds by 0.982. The Accuracy =  0.845, TPR = 0.928, TNR = 0.637, PPV = 0.866, and AUC = 0.873. Our AUC isn't the best, but it is still a good value.*
+
+##Q6. Logistic Regression for all variables
+```{r}
+affairs_new<-affairs%>%mutate(y=ifelse(children=="yes",1,0))
+affairs_new$children <- NULL
+fit4 <- glm(y~., data=affairs_new, family="binomial")
+prob2 <- predict(fit4)
+
+class_diag <- function(probs,truth){
+  #CONFUSION MATRIX: CALCULATE ACCURACY, TPR, TNR, PPV
+  tab<-table(factor(probs>.5,levels=c("FALSE","TRUE")),truth)
+  acc=sum(diag(tab))/sum(tab)
+  sens=tab[2,2]/colSums(tab)[2]
+  spec=tab[1,1]/colSums(tab)[1]
+  ppv=tab[2,2]/rowSums(tab)[2]
+  f1=2*(sens*ppv)/(sens+ppv)
+
+  if(is.numeric(truth)==FALSE & is.logical(truth)==FALSE) truth<-as.numeric(truth)-1
+  
+  #CALCULATE EXACT AUC
+  ord<-order(probs, decreasing=TRUE)
+  probs <- probs[ord]; truth <- truth[ord]
+  
+  TPR=cumsum(truth)/max(1,sum(truth)) 
+  FPR=cumsum(!truth)/max(1,sum(!truth))
+  
+  dup<-c(probs[-1]>=probs[-length(probs)], FALSE)
+  TPR<-c(0,TPR[!dup],1); FPR<-c(0,FPR[!dup],1)
+  n <- length(TPR)
+  auc<- sum( ((TPR[-1]+TPR[-n])/2) * (FPR[-1]-FPR[-n]) )
+
+  data.frame(acc,sens,spec,ppv,f1,auc)
+}
+
+truth = affairs_new$y
+class_diag(prob2, truth)
+table(prediction=as.numeric(prob2>.5), truth)%>% addmargins()
+
+```
+
+```{r}
+set.seed(1234)
+k=10
+
+# your code here
+## k-fold CV
+
+data_CV<-affairs_new[sample(nrow(affairs_new)),] #randomly order rows
+folds<-cut(seq(1:nrow(affairs_new)),breaks=k,labels=F) #create folds
+
+diags<-NULL
+for(i in 1:k){
+  ## Create training and test sets
+  train<-data_CV[folds!=i,] 
+  test<-data_CV[folds==i,]
+  
+  truth1<-test$y ## Truth labels for fold i
+  
+  ## Train model on training set (all but fold i)
+  fitCV1<-glm(y~.,data=train,family="binomial")
+  
+  ## Test model on test set (fold i) 
+  probs_CV<-predict(fitCV1,newdata = test,type="response")
+  
+  ## Get diagnostics for fold i
+  diags<-rbind(diags,class_diag(probs_CV,truth1))
+}
+
+
+summarize_all(diags,mean) #average diagnostics across all k folds
+```
+
+```{r}
+library(glmnet)
+set.seed(1234)
+# your code here
+y<-as.matrix(affairs$children) #grab response
+x<-model.matrix(children~.,data=affairs)[,-1] #predictors (drop intercept)
+head(x)
+x <- scale(x)
+
+cv <- cv.glmnet(x,y, family="binomial")
+lasso<-glmnet(x,y,family="binomial",lambda=cv$lambda.1se)
+coef(lasso)
+
+# prob_lasso <- predict(lasso_fit, poke_preds, type="response")
+# class_diag(prob_lasso, truth)
+# table(prediction=as.numeric(prob_lasso>.5), truth)
+```
+
+```{r}
+#Lasso CV
+set.seed(1234)
+k=10 #choose number of folds
+data1<-affairs %>% sample_frac
+folds <- ntile(1:nrow(data1),n=10)
+
+diags<-NULL 
+for(i in 1:k){
+  train<-data1[folds!=i,] 
+  test<-data1[folds==i,]
+  truth <- test$children
+  fit5<-glm(children~yearsmarried + yearsmarried_c, data=train, family="binomial") 
+  probs5 <- predict(fit5, newdata=test, type="response")
+  yhat<-predict(fit5,newdata=test)
+  diags<-rbind(diags,class_diag(probs5,truth))
+  }
+diags%>%summarize_all(mean)
+```
+
+
+*In-sample classification diagnostics: ACC = 0.805, TPR = 0.809, TNR = 0.795, PPV = 0.909, AUC = 0.888. Out-of-sample classification diagnostics: ACC = 0.830, TPR = 0.898, TNR = 0.662, PPV = 0.871, AUC = 0.876. The in-sample diagnostic had a slightly better AUC value than the out-of-sample diagnostic. Yearsmarried and yearsmarried_c are the only variables which are the most predictive of children. CV on Lasso: ACC = 0.845, TPR = 0.928, TNR = 0.640, PPV = 0.867, AUC = 0.873. Our AUC value for the Lasso model was the lowest value out of all the classification diagnostics.*
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{R, echo=F}
+## DO NOT DELETE THIS CHUNK!
+sessionInfo()
+Sys.time()
+Sys.info()
+```

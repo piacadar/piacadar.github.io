@@ -1,0 +1,256 @@
+---
+title: "Wrangling & Exploratory Data Analysis"
+author: "Pia Cadar"
+date: "2020-10-17"
+output: html_document
+---
+
+```{r global_options, include=FALSE}
+#DO NOT EDIT THIS CHUNK OR ANYTHING ABOVE IT!
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, fig.align = "center", warning = F, message = F, tidy=T, tidy.opts=list(width.cutoff=50))
+```
+
+*I chose two datasets related to COVID-19. The first one, country_wise_latest.csv, has the latest data on confirmed cases, including deaths, recovered, active, and many more. The second dataset, Food_Supply_kcal_Data.csv, is a record of the amount of calories consumed for various food categories in all the contries. It also contained confirmed COVID cases. Both of these were acquired through Kaggle, and they intersted me because I have always been interested in the effects of diet on our health. I thought these two datasets would be the perfect way to research that through a very current issue. I mainly focused on the effects of obesity, alcohol consumption, and sugar consumption on COVID related deaths, and I expect to find a higher than average death rate in countries with higher consumptions of alcohol and sugar, and higher obesity rates.*
+
+```{r cars}
+#import libraries
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library("tibble")
+library(GGally)
+library(cluster)
+```
+
+# Q1. Tidy plots
+```{r}
+food <- read_csv("Food_Supply_kcal_Data.csv")
+cases <- read_csv("country_wise_latest.csv")
+
+#Untidy datasets
+food <- food %>% pivot_wider(names_from="Country", values_from="Animal Products")
+cases <- cases %>% pivot_wider(names_from="Country/Region", values_from="Confirmed")
+head(food)
+head(cases)
+
+#Tidy datasets
+food <- food %>% pivot_longer(31:200, names_to="Country", values_to="Animal Products", values_drop_na=T)
+cases <- cases %>% pivot_longer(14:200, names_to="Country", values_to="Confirmed", values_drop_na=T)
+head(food)
+head(cases)
+
+```
+*Since my data was already tidy to begin with, I untidied the data by widening the Animal Product column to all the countries in the Food dataset, and widening the Confirmed COVID cases to the countries in the Cases dataset. I then retidied both datasets and renamed the Country variables.*
+
+# Q2. Join datasets
+```{r}
+#drop columns in food that will interfere with data in cases
+food_edit <- food[, -c(25:28)]
+head(food_edit)
+
+#join datasets
+cases_food <- cases %>% full_join(food_edit, by = "Country")
+head(cases_food)
+```
+*I did a full join because the datasets were very different from each other. From the Food dataset, I deleted Confirmed, Active, Deaths, and Recovered cases because they weren't up-to-date, and would have interfered with the Cases dataset, which was up-to-date. I also deleted any country that had NA's for any of the variables, so one of the countries deleted was the US, which had no data on calorie consumption and obesity. Later on in my analysis, I also deleted some of the columns that I knew I wasn't going to anaylze, such as Spices, Sugar Crops, and Oilcrops. I also deleted Undernourished because not all of the data was numerical so it did not work with my analysis. *
+
+# Q3. Summary Statistics
+## Exploring dataset using core dpylr functions
+```{r}
+# Remove any rows that contain "NA" in them
+cases_food <- cases_food %>% na.omit()
+head(cases_food)
+
+# Use filter to look at confirmed cases and alcoholic beverage data in countries
+cases_food %>% filter(Confirmed >=100000 & `Alcoholic Beverages`>=1) %>% arrange(desc(Confirmed))
+
+# Use group_by and summarize to determine the WHO region with the highest average cases
+cases_food %>% group_by(`WHO Region`) %>% 
+  summarize('Mean Confirmed' = mean(Confirmed, na.rm = T), 
+            'Mean Deaths' = mean(Deaths, na.rm = T),
+            'Mean Alcohol' = mean(`Alcoholic Beverages`, na.rm = T),
+            'Mean Fats' = mean(`Animal fats`, na.rm = T))
+
+# Create a dataset with only the variables I will be focusing on 
+cases_select <- cases_food %>% select(Deaths, Confirmed, 'Alcohol' = `Alcoholic Beverages`, 
+                                      `Animal fats`, 'Region' = `WHO Region`, Country, `Animal Products`, 
+                                      'Sugar' = `Sugar & Sweeteners`, 'Fruit' = `Fruits - Excluding Wine`,
+                                      Vegetables, `Vegetable Oils`, Obesity) 
+
+# Combine animal fats with vegetable oils into a new variable names "Fats"
+cases_select <- cases_select %>% mutate('Fats' = `Animal fats` + `Vegetable Oils`) %>% select(-`Animal fats`, -`Vegetable Oils`)
+head(cases_select)
+
+```
+*In the first graph, I deleted all the NA's and printed out the dataset to make sure it worked. I next printed all the countries that had over 100,000 confirmed COVID cases and where the scaled consumed calories from alcohol was greater than 1. Next, I grouped the dataset by Region and calculated the mean confirmed cases, COVID deaths, calories from alcohol, and calories from fat. Next, I renamed some of the column names to make it easier when conducting my analysis, and finally I combined Animal Fat and Plant Oil together into one variable called Fats, and removed both of those columns from the dataset so there wouldn't be any redundant data.*
+
+# Create summary statistics
+```{r}
+# #Find the mean, sd, n, and n_distinct for all the variables
+# cases_select %>% summarize(mean_prod = mean(`Animal Products`, na.rm=T),
+#                            mean_sugar = mean(Sugar, na.rm=T),
+#                            mean_fruit = mean(Fruit, na.rm=T),
+#                            mean_veg = mean(Vegetables, na.rm=T),
+#                            mean_alc = mean(Alcohol, na.rm=T),
+#                            mean_obese = mean(Obesity, na.rm=T),
+#                            mean_death = mean(Deaths, na.rm=T),
+#                            mean_fat = mean(Fats, na.rm=T),
+#                            mean_confirmed = mean(Confirmed, na.rm=T),
+#                            sd_death = sd(Deaths, na.rm=T),
+#                            sd_confirmed = sd(Confirmed, na.rm=T),
+#                            n_rows = n(),
+#                            n_countries = n_distinct(Country),
+#                            n_regions = n_distinct(Region))
+
+#Find the mean, sd, n, and n_distinct for all the variables when grouped by Regions
+cases_select %>% group_by(Region) %>% 
+  summarize(mean_sugar = mean(Sugar, na.rm=T),
+            mean_obese = mean(Obesity, na.rm=T),
+            mean_death = mean(Deaths, na.rm=T),
+            mean_confirmed = mean(Confirmed, na.rm=T),
+            sd_death = sd(Deaths, na.rm=T),
+            sd_confirmed = sd(Confirmed, na.rm=T),
+            n = n(),
+            se_death = sd_death/sqrt(n),
+            se_confirmed = sd_confirmed/sqrt(n),
+            n_countries = n_distinct(Country),
+            )
+
+```
+*These main data points I was looking at were grouped by Region and then anlyzed. The largest average calorie consumption from sugar came from the Americas, while the highest obesity rates came from Europe. The Americas had the highest average deaths from COVID (mean: 6948.6071, sd: 18153.822, se:3430.7498), while South-East Asia had the highest average confirmed COVID cases (mean: 229356.00, sd:511496.80, se: 180841.43). The variable 'n' and 'n_countries' refer to the amount of countries included in each of these regions. This number is not completely accurate though, as some of the countries were deleted from the dataset due to incomplete data.*
+
+# Q4. Visualizations
+## Correlation heatmap
+```{r}
+#Correlation heatmap of all the numeric variables
+cases_select %>% select_if(is.numeric) %>%
+  cor %>% 
+  as.data.frame %>% 
+  rownames_to_column %>% 
+  pivot_longer(-1) %>% 
+  ggplot(aes(rowname,name,fill=value)) + 
+    geom_tile()+ geom_text(aes(label=round(value,2))) + 
+    xlab("") + 
+    ylab("") + 
+    coord_fixed() + 
+    theme(axis.text.x=element_text(angle=90, hjust=1, vjust=0.5),
+        text=element_text(size=10)) + 
+    scale_fill_gradient(low = 'dark orange', high = 'dark red')
+  
+```
+*Graph #1 is a correlation heatmap to show the correlations between all the numeric variables. Besides Deaths and Confirmed cases, the two strongest positive correlations are between Animal Products and Alcohol, and Animal Products and Obesity. The majority of the relationships had either weak positive, or negative correlations.*
+
+## Graph #2
+```{r}
+ggplot(cases_select, aes(x = Country, y = Obesity, fill = Region)) +
+  geom_bar(stat="summary", fun=mean) +
+  theme(axis.text.x = element_text(angle= 90, hjust=1)) +
+  ggtitle("Obesity Rates Per Country") + 
+  scale_fill_brewer(palette = 'Greens')
+
+
+# ggplot(cases_select, aes(x = Obesity, fill = Region)) +
+#   geom_density(alpha=.75) +
+#   ggtitle("Obesity per WHO Region") +
+#   xlab("WHO Region") +
+#   ylab("Obesity Density")
+
+```
+*This graph highlights the obesity rates in the different countries. The graph is color coded with the 6 WHO recognized regions. The highest obesity rates appear to be in the Americas and Europe, however some countries in other regions also have higher obesity rates. The lowest rates seem to be in South-East Asia. *
+
+## Graph #3
+```{r}
+options(scipen = 999)
+ggplot(data = cases_select, aes(x = Confirmed, y = Deaths)) + 
+  geom_point(aes(color = Region, size = Alcohol)) + 
+  theme(axis.text.x = element_text(angle= 45, hjust=1)) +
+  ggtitle("Confirmed COVID Cases vs. Deaths per Region") +
+  xlab("Confirmed Cases") +
+  ylab("Deaths") +
+  scale_x_log10(n.breaks = 15) +
+  scale_y_log10(n.breaks = 15) 
+```
+*In Graph #3, Confirmed cases vs Deaths are being analyzed between the different regions. The scale for the graph was changed in order to show all the points in the dataset. From this graph, it appears that the regions that had the highest confirmed cases and deaths were Europe and the Americas (excluding the US). While the other regions do have countries that have a higher than average death/confirmed count, the majority of the high measurements come from the two regions mentioned. The size of the dots were determine by the amount of calories consumed from alcohol. It also appears that Europe had the high alcohol consumptions, with America being the second largest.*
+
+# Q5. Perform PAM
+
+```{r}
+#load the cluster package
+pam_cases <- cases_select %>% select('Confirmed', 'Deaths', 'Alcohol', 'Obesity', 'Sugar')
+
+#use the pam function
+pam1 <- pam_cases %>% pam(k=3)
+pam1
+
+#save cluster assignments to dataset and use them to color the points
+pamclust<-pam_cases %>% mutate(cluster=as.factor(pam1$clustering))
+pamclust %>% ggplot(aes(Obesity, Deaths,color=cluster)) + geom_point() + ggtitle("PAM cluster graph: Obesity vs. Deaths")
+
+
+```
+*This graph shows the different clusters when we initially ran PAM with k=3. At this point, we do not know if 3 clusters is the optimal number for k, but this is just an initial run to test PAM on our data and see how it with with the data. *
+
+
+```{r}
+#summarize your clusters
+pamclust %>% group_by(cluster) %>% summarize_if(is.numeric,mean,na.rm=T)
+
+#check final medoids
+cases_select %>% slice(pam1$id.med)
+
+#check if cluster assignments is reflecting natural order
+pamclust %>% mutate(region=cases_select$Region) %>% ggplot(aes(Obesity, Deaths, color=region, shape=cluster))+geom_point(size=4)
+
+
+```
+*The first table is a summary of the average values for Confirmed, Deaths, Alcohol, Obesity, and Sugar for the 3 different cluster. The secoond table shows the final medoids, which are the countries and regions that best represent the clusters. The final graph check to see if the clusters fit the data points based on Regions. Since we weren't including Region in our PAM analysis,and different countries within each region have very different amounts of COVID cases and deaths, I didn't expect the clusters to really fit within the regions.*
+
+
+```{r}
+#get average silhouette width
+pam1$silinfo$avg.width
+plot(pam1,which=2)
+
+```
+
+*This graph shows the average silhouette width of our PAM analysis with 3 clusters. The value calculated was 0.85, indicating that a strong structure had been found.*
+
+
+```{r}
+#conduct Goodness-of-Fit to determine # of clusters
+pam_dat <- pam_cases
+sil_width <- vector()
+for(i in 2:10){
+  pam_fit <- pam(pam_dat, k = i)
+  sil_width[i] <- pam_fit$silinfo$avg.width
+}
+ggplot()+geom_line(aes(x=1:10,y=sil_width))+scale_x_continuous(name="k",breaks=1:10)
+
+```
+*In this chunk of code, I ran a for loop in order to determine the best number of clusters to use for my analysis. It was found that 3 clusters was the best number, as that had the greatest silhouette width with an average a litter greater than 0.85.*
+
+
+```{r}
+#visualize the clusters to find the strongest correlations
+cases_select %>% mutate(cluster=as.factor(pam1$clustering)) %>%
+  ggpairs(columns = c('Confirmed', 'Deaths', 'Alcohol', 'Obesity', 'Sugar'), aes(color='red'))
+
+```
+*Here I visualized the clusters to find the greatest correlation between variables. As expected, it was found that the strongest correlation was between Confirmed COVID cases and COVID deaths. Sugar, obesity, and alcohol also had a strong correlations with each other, which was also expected. There were weak correlations between Alcohol/Obesity/Sugar and Deaths/Confirmed, and a negative correlation between Alcohol and Confirmed. Overall, there seems to be no strong correlation between diet choices (the amount of calories consumed from alcohol and sugar), obesity, and deaths related to COVID-19.*
+
+
+```{r}
+#compute means of all numeric variables
+cases1 <- pam_dat %>% mutate(cluster=as.factor(pam1$clustering))
+cases1 %>% group_by(cluster) %>% summarize_all(mean,na.rm=T)
+
+#show best projection of 5D data in 2D
+plot(pam1, which=1)
+```
+
+*In this final chunk of code, I again computed the average values for each of the numeric variables in each cluster. Finally, the plot visualizes how my 5D data was projected in 2D.*
+
+```{R, echo=F}
+## DO NOT DELETE OR MODIFY THIS CHUNK: IT MUST BE PRESENT TO RECEIVE CREDIT FOR THE ASSIGNMENT
+sessionInfo(); Sys.time(); Sys.info()
+```

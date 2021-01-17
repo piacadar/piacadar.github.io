@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en" data-theme=""><head>
+    <title> Pia Cadar | Wrangling &amp; Exploratory Data Analysis </title>
+
+    
+    <meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="description" content="Call me Pia">
+    
+    <link rel="stylesheet"
+          href="/css/style.min.1b320c0791722ac0a6fdde1a95f96f83202fa700fec413f074399ec757ac5bed.css"
+          integrity="sha256-GzIMB5FyKsCm/d4alflvgyAvpwD&#43;xBPwdDmex1esW&#43;0="
+          crossorigin="anonymous"
+          type="text/css">
+    
+    <link rel="stylesheet"
+        href="/css/markupHighlight.min.9755453ffb7bc4cd220f86ebb5922107b49f193cc62fc17e9785d27b33a8bf5b.css"
+        integrity="sha256-l1VFP/t7xM0iD4brtZIhB7SfGTzGL8F&#43;l4XSezOov1s="
+        crossorigin="anonymous"
+        type="text/css">
+    
+    <link rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" 
+    integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" 
+    crossorigin="anonymous" />
+
+    
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+    <link rel="canonical" href="/post/project1/">
+
+    
+    
+    
+    
+    <script type="text/javascript"
+            src="/js/anatole-header.min.d8599ee07b7d3f11bafbac30657ccc591e8d7fd36a9f580cd4c09e24e0e4a971.js"
+            integrity="sha256-2Fme4Ht9PxG6&#43;6wwZXzMWR6Nf9Nqn1gM1MCeJODkqXE="
+            crossorigin="anonymous"></script>
+
+
+    
+        
+        
+        <script type="text/javascript"
+                src="/js/anatole-theme-switcher.min.e289e9ebb2a4e7a7f895859c8a2b0da2de1ec73f22cea58d8475aa0597023837.js"
+                integrity="sha256-4onp67Kk56f4lYWciisNot4exz8izqWNhHWqBZcCODc="
+                crossorigin="anonymous"></script>
+    
+    <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/images/site-feature-image.png"/>
+
+<meta name="twitter:title" content="Wrangling &amp; Exploratory Data Analysis"/>
+<meta name="twitter:description" content="I chose two datasets related to COVID-19. The first one, country_wise_latest."/>
+
+</head>
+<body><div class="sidebar animated fadeInDown ">
+    <div class="logo-title">
+        <div class="title">
+            <img src="/images/profile.JPG" alt="profile picture">
+            <h3 title=""><a href="/">I&#39;m Pia Cadar</a></h3>
+            <div class="description">
+                <p>Call me Pia</p>
+            </div>
+        </div>
+    </div>
+    <ul class="social-links">
+        
+            <li>
+                <a href="https://github.com/piacadar" rel="me" aria-label="GitHub">
+                    <i class="fab fa-github fa-2x" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            <li>
+                <a href="mailto:pia.cadar@gmail.com" rel="me" aria-label="e-mail">
+                    <i class="fas fa-envelope fa-2x" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+    </ul>
+    <div class="footer">
+        <div class="by_farbox">&copy; Pia Cadar  2021 </div>
+    </div>
+</div>
+<div class="main">
+    <div class="page-top  animated fadeInDown ">
+    <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+    </a>
+    <ul class="nav" id="navMenu">
+        
+        
+            
+            <li><a 
+                   href="/"
+                        
+                   title="">Home</a></li>
+        
+            
+            <li><a 
+                   href="/post/"
+                        
+                   title="">Posts</a></li>
+        
+            
+            <li><a 
+                   href="/about/"
+                        
+                   title="">About</a></li>
+        
+            
+            <li><a 
+                   href="/contact/"
+                        
+                   title="">Contact</a></li>
+        
+            
+            <li><a 
+                   href="/resume/"
+                        
+                   title="">Resume</a></li>
+        
+        
+        
+            <li class="theme-switch-item">
+                <a class="theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+    <div class="autopagerize_page_element">
+        <div class="content">
+    <div class="post  animated fadeInDown ">
+        <div class="post-content">
+            
+            <div class="post-title">
+                <h3>Wrangling &amp; Exploratory Data Analysis</h3>
+                
+                    <div class="info">
+                        <em class="fas fa-calendar-day"></em>
+                        <span class="date"> Sat, Oct 17, 2020 
+                                           </span>
+                        <em class="fas fa-stopwatch"></em>
+                        <span class="reading-time">22-minute read</span>
+                    </div>
+                
+            </div>
+
+            
+
+
+<p><em>I chose two datasets related to COVID-19. The first one, country_wise_latest.csv, has the latest data on confirmed cases, including deaths, recovered, active, and many more. The second dataset, Food_Supply_kcal_Data.csv, is a record of the amount of calories consumed for various food categories in all the contries. It also contained confirmed COVID cases. Both of these were acquired through Kaggle, and they intersted me because I have always been interested in the effects of diet on our health. I thought these two datasets would be the perfect way to research that through a very current issue. I mainly focused on the effects of obesity, alcohol consumption, and sugar consumption on COVID related deaths, and I expect to find a higher than average death rate in countries with higher consumptions of alcohol and sugar, and higher obesity rates.</em></p>
+<pre class="r"><code>#import libraries
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(&quot;tibble&quot;)
+library(GGally)
+library(cluster)</code></pre>
+<div id="q1.-tidy-plots" class="section level1">
+<h1>Q1. Tidy plots</h1>
+<pre class="r"><code>food &lt;- read_csv(&quot;Food_Supply_kcal_Data.csv&quot;)
+cases &lt;- read_csv(&quot;country_wise_latest.csv&quot;)
+
+#Untidy datasets
+food &lt;- food %&gt;% pivot_wider(names_from=&quot;Country&quot;, values_from=&quot;Animal Products&quot;)
+cases &lt;- cases %&gt;% pivot_wider(names_from=&quot;Country/Region&quot;, values_from=&quot;Confirmed&quot;)
+head(food)</code></pre>
+<pre><code>## # A tibble: 6 x 200
+##   `Alcoholic Beve… `Animal fats` `Aquatic Produc… `Cereals - Excl…   Eggs
+##              &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;  &lt;dbl&gt;
+## 1           0              0.850                0             37.1 0.150 
+## 2           0.912          1.06                 0             16.2 0.809 
+## 3           0.0896         0.194                0             25.0 0.418 
+## 4           1.94           0.264                0             18.4 0.0441
+## 5           2.30           1.54                 0             13.7 0.206 
+## 6           1.44           1.06                 0             16.8 0.864 
+## # … with 195 more variables: `Fish, Seafood` &lt;dbl&gt;, `Fruits - Excluding
+## #   Wine` &lt;dbl&gt;, Meat &lt;dbl&gt;, `Milk - Excluding Butter` &lt;dbl&gt;,
+## #   Miscellaneous &lt;dbl&gt;, Offals &lt;dbl&gt;, Oilcrops &lt;dbl&gt;, Pulses &lt;dbl&gt;,
+## #   Spices &lt;dbl&gt;, `Starchy Roots` &lt;dbl&gt;, Stimulants &lt;dbl&gt;, `Sugar Crops` &lt;dbl&gt;,
+## #   `Sugar &amp; Sweeteners` &lt;dbl&gt;, Treenuts &lt;dbl&gt;, `Vegetal Products` &lt;dbl&gt;,
+## #   `Vegetable Oils` &lt;dbl&gt;, Vegetables &lt;dbl&gt;, Obesity &lt;dbl&gt;,
+## #   Undernourished &lt;chr&gt;, Confirmed &lt;dbl&gt;, Deaths &lt;dbl&gt;, Recovered &lt;dbl&gt;,
+## #   Active &lt;dbl&gt;, Population &lt;dbl&gt;, `Unit (all except Population)` &lt;chr&gt;,
+## #   Afghanistan &lt;dbl&gt;, Albania &lt;dbl&gt;, Algeria &lt;dbl&gt;, Angola &lt;dbl&gt;, `Antigua and
+## #   Barbuda` &lt;dbl&gt;, Argentina &lt;dbl&gt;, Armenia &lt;dbl&gt;, Australia &lt;dbl&gt;,
+## #   Austria &lt;dbl&gt;, Azerbaijan &lt;dbl&gt;, Bahamas &lt;dbl&gt;, Bangladesh &lt;dbl&gt;,
+## #   Barbados &lt;dbl&gt;, Belarus &lt;dbl&gt;, Belgium &lt;dbl&gt;, Belize &lt;dbl&gt;, Benin &lt;dbl&gt;,
+## #   Bolivia &lt;dbl&gt;, `Bosnia and Herzegovina` &lt;dbl&gt;, Botswana &lt;dbl&gt;,
+## #   Brazil &lt;dbl&gt;, Bulgaria &lt;dbl&gt;, `Burkina Faso` &lt;dbl&gt;, `Cabo Verde` &lt;dbl&gt;,
+## #   Cambodia &lt;dbl&gt;, Cameroon &lt;dbl&gt;, Canada &lt;dbl&gt;, `Central African
+## #   Republic` &lt;dbl&gt;, Chad &lt;dbl&gt;, Chile &lt;dbl&gt;, China &lt;dbl&gt;, Colombia &lt;dbl&gt;,
+## #   Congo &lt;dbl&gt;, `Costa Rica` &lt;dbl&gt;, `Cote d&#39;Ivoire` &lt;dbl&gt;, Croatia &lt;dbl&gt;,
+## #   Cuba &lt;dbl&gt;, Cyprus &lt;dbl&gt;, Czechia &lt;dbl&gt;, Denmark &lt;dbl&gt;, Djibouti &lt;dbl&gt;,
+## #   Dominica &lt;dbl&gt;, `Dominican Republic` &lt;dbl&gt;, Ecuador &lt;dbl&gt;, Egypt &lt;dbl&gt;, `El
+## #   Salvador` &lt;dbl&gt;, Estonia &lt;dbl&gt;, Eswatini &lt;dbl&gt;, Ethiopia &lt;dbl&gt;, Fiji &lt;dbl&gt;,
+## #   Finland &lt;dbl&gt;, France &lt;dbl&gt;, `French Polynesia` &lt;dbl&gt;, Gabon &lt;dbl&gt;,
+## #   Gambia &lt;dbl&gt;, Georgia &lt;dbl&gt;, Germany &lt;dbl&gt;, Ghana &lt;dbl&gt;, Greece &lt;dbl&gt;,
+## #   Grenada &lt;dbl&gt;, Guatemala &lt;dbl&gt;, Guinea &lt;dbl&gt;, `Guinea-Bissau` &lt;dbl&gt;,
+## #   Guyana &lt;dbl&gt;, Haiti &lt;dbl&gt;, Honduras &lt;dbl&gt;, Hungary &lt;dbl&gt;, Iceland &lt;dbl&gt;,
+## #   India &lt;dbl&gt;, Indonesia &lt;dbl&gt;, `Iran (Islamic Republic of)` &lt;dbl&gt;,
+## #   Iraq &lt;dbl&gt;, Ireland &lt;dbl&gt;, Israel &lt;dbl&gt;, Italy &lt;dbl&gt;, …</code></pre>
+<pre class="r"><code>head(cases)</code></pre>
+<pre><code>## # A tibble: 6 x 200
+##   Deaths Recovered Active `New cases` `New deaths` `New recovered`
+##    &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;           &lt;dbl&gt;
+## 1   1269     25198   9796         106           10              18
+## 2    144      2745   1991         117            6              63
+## 3   1163     18837   7973         616            8             749
+## 4     52       803     52          10            0               0
+## 5     41       242    667          18            1               0
+## 6      3        65     18           4            0               5
+## # … with 194 more variables: `Deaths / 100 Cases` &lt;dbl&gt;, `Recovered / 100
+## #   Cases` &lt;dbl&gt;, `Deaths / 100 Recovered` &lt;dbl&gt;, `Confirmed last week` &lt;dbl&gt;,
+## #   `1 week change` &lt;dbl&gt;, `1 week % increase` &lt;dbl&gt;, `WHO Region` &lt;chr&gt;,
+## #   Afghanistan &lt;dbl&gt;, Albania &lt;dbl&gt;, Algeria &lt;dbl&gt;, Andorra &lt;dbl&gt;,
+## #   Angola &lt;dbl&gt;, `Antigua and Barbuda` &lt;dbl&gt;, Argentina &lt;dbl&gt;, Armenia &lt;dbl&gt;,
+## #   Australia &lt;dbl&gt;, Austria &lt;dbl&gt;, Azerbaijan &lt;dbl&gt;, Bahamas &lt;dbl&gt;,
+## #   Bahrain &lt;dbl&gt;, Bangladesh &lt;dbl&gt;, Barbados &lt;dbl&gt;, Belarus &lt;dbl&gt;,
+## #   Belgium &lt;dbl&gt;, Belize &lt;dbl&gt;, Benin &lt;dbl&gt;, Bhutan &lt;dbl&gt;, Bolivia &lt;dbl&gt;,
+## #   `Bosnia and Herzegovina` &lt;dbl&gt;, Botswana &lt;dbl&gt;, Brazil &lt;dbl&gt;, Brunei &lt;dbl&gt;,
+## #   Bulgaria &lt;dbl&gt;, `Burkina Faso` &lt;dbl&gt;, Burma &lt;dbl&gt;, Burundi &lt;dbl&gt;, `Cabo
+## #   Verde` &lt;dbl&gt;, Cambodia &lt;dbl&gt;, Cameroon &lt;dbl&gt;, Canada &lt;dbl&gt;, `Central
+## #   African Republic` &lt;dbl&gt;, Chad &lt;dbl&gt;, Chile &lt;dbl&gt;, China &lt;dbl&gt;,
+## #   Colombia &lt;dbl&gt;, Comoros &lt;dbl&gt;, `Congo (Brazzaville)` &lt;dbl&gt;, `Congo
+## #   (Kinshasa)` &lt;dbl&gt;, `Costa Rica` &lt;dbl&gt;, `Cote d&#39;Ivoire` &lt;dbl&gt;,
+## #   Croatia &lt;dbl&gt;, Cuba &lt;dbl&gt;, Cyprus &lt;dbl&gt;, Czechia &lt;dbl&gt;, Denmark &lt;dbl&gt;,
+## #   Djibouti &lt;dbl&gt;, Dominica &lt;dbl&gt;, `Dominican Republic` &lt;dbl&gt;, Ecuador &lt;dbl&gt;,
+## #   Egypt &lt;dbl&gt;, `El Salvador` &lt;dbl&gt;, `Equatorial Guinea` &lt;dbl&gt;, Eritrea &lt;dbl&gt;,
+## #   Estonia &lt;dbl&gt;, Eswatini &lt;dbl&gt;, Ethiopia &lt;dbl&gt;, Fiji &lt;dbl&gt;, Finland &lt;dbl&gt;,
+## #   France &lt;dbl&gt;, Gabon &lt;dbl&gt;, Gambia &lt;dbl&gt;, Georgia &lt;dbl&gt;, Germany &lt;dbl&gt;,
+## #   Ghana &lt;dbl&gt;, Greece &lt;dbl&gt;, Greenland &lt;dbl&gt;, Grenada &lt;dbl&gt;, Guatemala &lt;dbl&gt;,
+## #   Guinea &lt;dbl&gt;, `Guinea-Bissau` &lt;dbl&gt;, Guyana &lt;dbl&gt;, Haiti &lt;dbl&gt;, `Holy
+## #   See` &lt;dbl&gt;, Honduras &lt;dbl&gt;, Hungary &lt;dbl&gt;, Iceland &lt;dbl&gt;, India &lt;dbl&gt;,
+## #   Indonesia &lt;dbl&gt;, Iran &lt;dbl&gt;, Iraq &lt;dbl&gt;, Ireland &lt;dbl&gt;, Israel &lt;dbl&gt;,
+## #   Italy &lt;dbl&gt;, Jamaica &lt;dbl&gt;, Japan &lt;dbl&gt;, Jordan &lt;dbl&gt;, Kazakhstan &lt;dbl&gt;,
+## #   Kenya &lt;dbl&gt;, Kosovo &lt;dbl&gt;, Kuwait &lt;dbl&gt;, …</code></pre>
+<pre class="r"><code>#Tidy datasets
+food &lt;- food %&gt;% pivot_longer(31:200, names_to=&quot;Country&quot;, values_to=&quot;Animal Products&quot;, values_drop_na=T)
+cases &lt;- cases %&gt;% pivot_longer(14:200, names_to=&quot;Country&quot;, values_to=&quot;Confirmed&quot;, values_drop_na=T)
+head(food)</code></pre>
+<pre><code>## # A tibble: 6 x 32
+##   `Alcoholic Beve… `Animal fats` `Aquatic Produc… `Cereals - Excl…   Eggs
+##              &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;  &lt;dbl&gt;
+## 1           0              0.850                0             37.1 0.150 
+## 2           0.912          1.06                 0             16.2 0.809 
+## 3           0.0896         0.194                0             25.0 0.418 
+## 4           1.94           0.264                0             18.4 0.0441
+## 5           2.30           1.54                 0             13.7 0.206 
+## 6           1.44           1.06                 0             16.8 0.864 
+## # … with 27 more variables: `Fish, Seafood` &lt;dbl&gt;, `Fruits - Excluding
+## #   Wine` &lt;dbl&gt;, Meat &lt;dbl&gt;, `Milk - Excluding Butter` &lt;dbl&gt;,
+## #   Miscellaneous &lt;dbl&gt;, Offals &lt;dbl&gt;, Oilcrops &lt;dbl&gt;, Pulses &lt;dbl&gt;,
+## #   Spices &lt;dbl&gt;, `Starchy Roots` &lt;dbl&gt;, Stimulants &lt;dbl&gt;, `Sugar Crops` &lt;dbl&gt;,
+## #   `Sugar &amp; Sweeteners` &lt;dbl&gt;, Treenuts &lt;dbl&gt;, `Vegetal Products` &lt;dbl&gt;,
+## #   `Vegetable Oils` &lt;dbl&gt;, Vegetables &lt;dbl&gt;, Obesity &lt;dbl&gt;,
+## #   Undernourished &lt;chr&gt;, Confirmed &lt;dbl&gt;, Deaths &lt;dbl&gt;, Recovered &lt;dbl&gt;,
+## #   Active &lt;dbl&gt;, Population &lt;dbl&gt;, `Unit (all except Population)` &lt;chr&gt;,
+## #   Country &lt;chr&gt;, `Animal Products` &lt;dbl&gt;</code></pre>
+<pre class="r"><code>head(cases)</code></pre>
+<pre><code>## # A tibble: 6 x 15
+##   Deaths Recovered Active `New cases` `New deaths` `New recovered`
+##    &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;           &lt;dbl&gt;
+## 1   1269     25198   9796         106           10              18
+## 2    144      2745   1991         117            6              63
+## 3   1163     18837   7973         616            8             749
+## 4     52       803     52          10            0               0
+## 5     41       242    667          18            1               0
+## 6      3        65     18           4            0               5
+## # … with 9 more variables: `Deaths / 100 Cases` &lt;dbl&gt;, `Recovered / 100
+## #   Cases` &lt;dbl&gt;, `Deaths / 100 Recovered` &lt;dbl&gt;, `Confirmed last week` &lt;dbl&gt;,
+## #   `1 week change` &lt;dbl&gt;, `1 week % increase` &lt;dbl&gt;, `WHO Region` &lt;chr&gt;,
+## #   Country &lt;chr&gt;, Confirmed &lt;dbl&gt;</code></pre>
+<p><em>Since my data was already tidy to begin with, I untidied the data by widening the Animal Product column to all the countries in the Food dataset, and widening the Confirmed COVID cases to the countries in the Cases dataset. I then retidied both datasets and renamed the Country variables.</em></p>
+</div>
+<div id="q2.-join-datasets" class="section level1">
+<h1>Q2. Join datasets</h1>
+<pre class="r"><code>#drop columns in food that will interfere with data in cases
+food_edit &lt;- food[, -c(25:28)]
+head(food_edit)</code></pre>
+<pre><code>## # A tibble: 6 x 28
+##   `Alcoholic Beve… `Animal fats` `Aquatic Produc… `Cereals - Excl…   Eggs
+##              &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;  &lt;dbl&gt;
+## 1           0              0.850                0             37.1 0.150 
+## 2           0.912          1.06                 0             16.2 0.809 
+## 3           0.0896         0.194                0             25.0 0.418 
+## 4           1.94           0.264                0             18.4 0.0441
+## 5           2.30           1.54                 0             13.7 0.206 
+## 6           1.44           1.06                 0             16.8 0.864 
+## # … with 23 more variables: `Fish, Seafood` &lt;dbl&gt;, `Fruits - Excluding
+## #   Wine` &lt;dbl&gt;, Meat &lt;dbl&gt;, `Milk - Excluding Butter` &lt;dbl&gt;,
+## #   Miscellaneous &lt;dbl&gt;, Offals &lt;dbl&gt;, Oilcrops &lt;dbl&gt;, Pulses &lt;dbl&gt;,
+## #   Spices &lt;dbl&gt;, `Starchy Roots` &lt;dbl&gt;, Stimulants &lt;dbl&gt;, `Sugar Crops` &lt;dbl&gt;,
+## #   `Sugar &amp; Sweeteners` &lt;dbl&gt;, Treenuts &lt;dbl&gt;, `Vegetal Products` &lt;dbl&gt;,
+## #   `Vegetable Oils` &lt;dbl&gt;, Vegetables &lt;dbl&gt;, Obesity &lt;dbl&gt;,
+## #   Undernourished &lt;chr&gt;, Population &lt;dbl&gt;, `Unit (all except
+## #   Population)` &lt;chr&gt;, Country &lt;chr&gt;, `Animal Products` &lt;dbl&gt;</code></pre>
+<pre class="r"><code>#join datasets
+cases_food &lt;- cases %&gt;% full_join(food_edit, by = &quot;Country&quot;)
+head(cases_food)</code></pre>
+<pre><code>## # A tibble: 6 x 42
+##   Deaths Recovered Active `New cases` `New deaths` `New recovered`
+##    &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;           &lt;dbl&gt;
+## 1   1269     25198   9796         106           10              18
+## 2    144      2745   1991         117            6              63
+## 3   1163     18837   7973         616            8             749
+## 4     52       803     52          10            0               0
+## 5     41       242    667          18            1               0
+## 6      3        65     18           4            0               5
+## # … with 36 more variables: `Deaths / 100 Cases` &lt;dbl&gt;, `Recovered / 100
+## #   Cases` &lt;dbl&gt;, `Deaths / 100 Recovered` &lt;dbl&gt;, `Confirmed last week` &lt;dbl&gt;,
+## #   `1 week change` &lt;dbl&gt;, `1 week % increase` &lt;dbl&gt;, `WHO Region` &lt;chr&gt;,
+## #   Country &lt;chr&gt;, Confirmed &lt;dbl&gt;, `Alcoholic Beverages` &lt;dbl&gt;, `Animal
+## #   fats` &lt;dbl&gt;, `Aquatic Products, Other` &lt;dbl&gt;, `Cereals - Excluding
+## #   Beer` &lt;dbl&gt;, Eggs &lt;dbl&gt;, `Fish, Seafood` &lt;dbl&gt;, `Fruits - Excluding
+## #   Wine` &lt;dbl&gt;, Meat &lt;dbl&gt;, `Milk - Excluding Butter` &lt;dbl&gt;,
+## #   Miscellaneous &lt;dbl&gt;, Offals &lt;dbl&gt;, Oilcrops &lt;dbl&gt;, Pulses &lt;dbl&gt;,
+## #   Spices &lt;dbl&gt;, `Starchy Roots` &lt;dbl&gt;, Stimulants &lt;dbl&gt;, `Sugar Crops` &lt;dbl&gt;,
+## #   `Sugar &amp; Sweeteners` &lt;dbl&gt;, Treenuts &lt;dbl&gt;, `Vegetal Products` &lt;dbl&gt;,
+## #   `Vegetable Oils` &lt;dbl&gt;, Vegetables &lt;dbl&gt;, Obesity &lt;dbl&gt;,
+## #   Undernourished &lt;chr&gt;, Population &lt;dbl&gt;, `Unit (all except
+## #   Population)` &lt;chr&gt;, `Animal Products` &lt;dbl&gt;</code></pre>
+<p><em>I did a full join because the datasets were very different from each other. From the Food dataset, I deleted Confirmed, Active, Deaths, and Recovered cases because they weren’t up-to-date, and would have interfered with the Cases dataset, which was up-to-date. I also deleted any country that had NA’s for any of the variables, so one of the countries deleted was the US, which had no data on calorie consumption and obesity. Later on in my analysis, I also deleted some of the columns that I knew I wasn’t going to anaylze, such as Spices, Sugar Crops, and Oilcrops. I also deleted Undernourished because not all of the data was numerical so it did not work with my analysis. </em></p>
+</div>
+<div id="q3.-summary-statistics" class="section level1">
+<h1>Q3. Summary Statistics</h1>
+<div id="exploring-dataset-using-core-dpylr-functions" class="section level2">
+<h2>Exploring dataset using core dpylr functions</h2>
+<pre class="r"><code># Remove any rows that contain &quot;NA&quot; in them
+cases_food &lt;- cases_food %&gt;% na.omit()
+head(cases_food)</code></pre>
+<pre><code>## # A tibble: 6 x 42
+##   Deaths Recovered Active `New cases` `New deaths` `New recovered`
+##    &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;           &lt;dbl&gt;
+## 1   1269     25198   9796         106           10              18
+## 2    144      2745   1991         117            6              63
+## 3   1163     18837   7973         616            8             749
+## 4     41       242    667          18            1               0
+## 5   3059     72575  91782        4890          120            2057
+## 6    711     26665  10014          73            6             187
+## # … with 36 more variables: `Deaths / 100 Cases` &lt;dbl&gt;, `Recovered / 100
+## #   Cases` &lt;dbl&gt;, `Deaths / 100 Recovered` &lt;dbl&gt;, `Confirmed last week` &lt;dbl&gt;,
+## #   `1 week change` &lt;dbl&gt;, `1 week % increase` &lt;dbl&gt;, `WHO Region` &lt;chr&gt;,
+## #   Country &lt;chr&gt;, Confirmed &lt;dbl&gt;, `Alcoholic Beverages` &lt;dbl&gt;, `Animal
+## #   fats` &lt;dbl&gt;, `Aquatic Products, Other` &lt;dbl&gt;, `Cereals - Excluding
+## #   Beer` &lt;dbl&gt;, Eggs &lt;dbl&gt;, `Fish, Seafood` &lt;dbl&gt;, `Fruits - Excluding
+## #   Wine` &lt;dbl&gt;, Meat &lt;dbl&gt;, `Milk - Excluding Butter` &lt;dbl&gt;,
+## #   Miscellaneous &lt;dbl&gt;, Offals &lt;dbl&gt;, Oilcrops &lt;dbl&gt;, Pulses &lt;dbl&gt;,
+## #   Spices &lt;dbl&gt;, `Starchy Roots` &lt;dbl&gt;, Stimulants &lt;dbl&gt;, `Sugar Crops` &lt;dbl&gt;,
+## #   `Sugar &amp; Sweeteners` &lt;dbl&gt;, Treenuts &lt;dbl&gt;, `Vegetal Products` &lt;dbl&gt;,
+## #   `Vegetable Oils` &lt;dbl&gt;, Vegetables &lt;dbl&gt;, Obesity &lt;dbl&gt;,
+## #   Undernourished &lt;chr&gt;, Population &lt;dbl&gt;, `Unit (all except
+## #   Population)` &lt;chr&gt;, `Animal Products` &lt;dbl&gt;</code></pre>
+<pre class="r"><code># Use filter to look at confirmed cases and alcoholic beverage data in countries
+cases_food %&gt;% filter(Confirmed &gt;=100000 &amp; `Alcoholic Beverages`&gt;=1) %&gt;% arrange(desc(Confirmed))</code></pre>
+<pre><code>## # A tibble: 12 x 42
+##    Deaths Recovered Active `New cases` `New deaths` `New recovered`
+##     &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;           &lt;dbl&gt;
+##  1  87618   1846641 508116       23284          614           33728
+##  2   7067    274925 170537        7096          298            9848
+##  3  44022    303810  47657        4973          342            8588
+##  4  18418    272547  98752       13756          575            4697
+##  5   9187    319954  18782        2133           75            1859
+##  6  45844      1437 254427         688            7               3
+##  7  28432    150376  93613           0            0               0
+##  8  35112    198593  12581         168            5             147
+##  9  30212     81212 108928        2551           17             267
+## 10   9125    190314   7673         445            1             259
+## 11   3059     72575  91782        4890          120            2057
+## 12   8944         0 107514         682           11               0
+## # … with 36 more variables: `Deaths / 100 Cases` &lt;dbl&gt;, `Recovered / 100
+## #   Cases` &lt;dbl&gt;, `Deaths / 100 Recovered` &lt;dbl&gt;, `Confirmed last week` &lt;dbl&gt;,
+## #   `1 week change` &lt;dbl&gt;, `1 week % increase` &lt;dbl&gt;, `WHO Region` &lt;chr&gt;,
+## #   Country &lt;chr&gt;, Confirmed &lt;dbl&gt;, `Alcoholic Beverages` &lt;dbl&gt;, `Animal
+## #   fats` &lt;dbl&gt;, `Aquatic Products, Other` &lt;dbl&gt;, `Cereals - Excluding
+## #   Beer` &lt;dbl&gt;, Eggs &lt;dbl&gt;, `Fish, Seafood` &lt;dbl&gt;, `Fruits - Excluding
+## #   Wine` &lt;dbl&gt;, Meat &lt;dbl&gt;, `Milk - Excluding Butter` &lt;dbl&gt;,
+## #   Miscellaneous &lt;dbl&gt;, Offals &lt;dbl&gt;, Oilcrops &lt;dbl&gt;, Pulses &lt;dbl&gt;,
+## #   Spices &lt;dbl&gt;, `Starchy Roots` &lt;dbl&gt;, Stimulants &lt;dbl&gt;, `Sugar Crops` &lt;dbl&gt;,
+## #   `Sugar &amp; Sweeteners` &lt;dbl&gt;, Treenuts &lt;dbl&gt;, `Vegetal Products` &lt;dbl&gt;,
+## #   `Vegetable Oils` &lt;dbl&gt;, Vegetables &lt;dbl&gt;, Obesity &lt;dbl&gt;,
+## #   Undernourished &lt;chr&gt;, Population &lt;dbl&gt;, `Unit (all except
+## #   Population)` &lt;chr&gt;, `Animal Products` &lt;dbl&gt;</code></pre>
+<pre class="r"><code># Use group_by and summarize to determine the WHO region with the highest average cases
+cases_food %&gt;% group_by(`WHO Region`) %&gt;% 
+  summarize(&#39;Mean Confirmed&#39; = mean(Confirmed, na.rm = T), 
+            &#39;Mean Deaths&#39; = mean(Deaths, na.rm = T),
+            &#39;Mean Alcohol&#39; = mean(`Alcoholic Beverages`, na.rm = T),
+            &#39;Mean Fats&#39; = mean(`Animal fats`, na.rm = T))</code></pre>
+<pre><code>## # A tibble: 6 x 5
+##   `WHO Region`         `Mean Confirmed` `Mean Deaths` `Mean Alcohol` `Mean Fats`
+##   &lt;chr&gt;                           &lt;dbl&gt;         &lt;dbl&gt;          &lt;dbl&gt;       &lt;dbl&gt;
+## 1 Africa                         18530.          311.         0.908        0.306
+## 2 Americas                      161875.         6949.         1.26         1.12 
+## 3 Eastern Mediterrane…           68716.         1456.         0.0722       0.749
+## 4 Europe                         53113.         4276.         2.30         2.51 
+## 5 South-East Asia               229356          5168.         0.407        0.515
+## 6 Western Pacific                22670.          791.         1.30         1.53</code></pre>
+<pre class="r"><code># Create a dataset with only the variables I will be focusing on 
+cases_select &lt;- cases_food %&gt;% select(Deaths, Confirmed, &#39;Alcohol&#39; = `Alcoholic Beverages`, 
+                                      `Animal fats`, &#39;Region&#39; = `WHO Region`, Country, `Animal Products`, 
+                                      &#39;Sugar&#39; = `Sugar &amp; Sweeteners`, &#39;Fruit&#39; = `Fruits - Excluding Wine`,
+                                      Vegetables, `Vegetable Oils`, Obesity) 
+
+# Combine animal fats with vegetable oils into a new variable names &quot;Fats&quot;
+cases_select &lt;- cases_select %&gt;% mutate(&#39;Fats&#39; = `Animal fats` + `Vegetable Oils`) %&gt;% select(-`Animal fats`, -`Vegetable Oils`)
+head(cases_select)</code></pre>
+<pre><code>## # A tibble: 6 x 11
+##   Deaths Confirmed Alcohol Region Country `Animal Product… Sugar Fruit
+##    &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1   1269     36263  0      Easte… Afghan…             4.78  2.23  1.48
+## 2    144      4880  0.912  Europe Albania            16.1   3.44  3.90
+## 3   1163     27973  0.0896 Africa Algeria             6.03  3.99  3.18
+## 4     41       950  1.94   Africa Angola              4.69  2.75  2.31
+## 5   3059    167416  1.44   Ameri… Argent…            15.0   7.05  1.47
+## 6    711     37390  0.227  Europe Armenia            12.8   5.30  2.53
+## # … with 3 more variables: Vegetables &lt;dbl&gt;, Obesity &lt;dbl&gt;, Fats &lt;dbl&gt;</code></pre>
+<p><em>In the first graph, I deleted all the NA’s and printed out the dataset to make sure it worked. I next printed all the countries that had over 100,000 confirmed COVID cases and where the scaled consumed calories from alcohol was greater than 1. Next, I grouped the dataset by Region and calculated the mean confirmed cases, COVID deaths, calories from alcohol, and calories from fat. Next, I renamed some of the column names to make it easier when conducting my analysis, and finally I combined Animal Fat and Plant Oil together into one variable called Fats, and removed both of those columns from the dataset so there wouldn’t be any redundant data.</em></p>
+</div>
+</div>
+<div id="create-summary-statistics" class="section level1">
+<h1>Create summary statistics</h1>
+<pre class="r"><code># #Find the mean, sd, n, and n_distinct for all the variables
+# cases_select %&gt;% summarize(mean_prod = mean(`Animal Products`, na.rm=T),
+#                            mean_sugar = mean(Sugar, na.rm=T),
+#                            mean_fruit = mean(Fruit, na.rm=T),
+#                            mean_veg = mean(Vegetables, na.rm=T),
+#                            mean_alc = mean(Alcohol, na.rm=T),
+#                            mean_obese = mean(Obesity, na.rm=T),
+#                            mean_death = mean(Deaths, na.rm=T),
+#                            mean_fat = mean(Fats, na.rm=T),
+#                            mean_confirmed = mean(Confirmed, na.rm=T),
+#                            sd_death = sd(Deaths, na.rm=T),
+#                            sd_confirmed = sd(Confirmed, na.rm=T),
+#                            n_rows = n(),
+#                            n_countries = n_distinct(Country),
+#                            n_regions = n_distinct(Region))
+
+#Find the mean, sd, n, and n_distinct for all the variables when grouped by Regions
+cases_select %&gt;% group_by(Region) %&gt;% 
+  summarize(mean_sugar = mean(Sugar, na.rm=T),
+            mean_obese = mean(Obesity, na.rm=T),
+            mean_death = mean(Deaths, na.rm=T),
+            mean_confirmed = mean(Confirmed, na.rm=T),
+            sd_death = sd(Deaths, na.rm=T),
+            sd_confirmed = sd(Confirmed, na.rm=T),
+            n = n(),
+            se_death = sd_death/sqrt(n),
+            se_confirmed = sd_confirmed/sqrt(n),
+            n_countries = n_distinct(Country),
+            )</code></pre>
+<pre><code>## # A tibble: 6 x 11
+##   Region mean_sugar mean_obese mean_death mean_confirmed sd_death sd_confirmed
+##   &lt;chr&gt;       &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt;
+## 1 Africa       2.91       9.32       311.         18530.    1149.       72941.
+## 2 Ameri…       6.99      23.6       6949.        161875.   18154.      463173.
+## 3 Easte…       5.37      23.1       1456.         68716.    1971.       90029.
+## 4 Europe       5.08      24.3       4276.         53113.   10025.       79902.
+## 5 South…       3.80       5.61      5168.        229356    11555.      511497.
+## 6 Weste…       4.87      15.0        791.         22670.    1500.       34007.
+## # … with 4 more variables: n &lt;int&gt;, se_death &lt;dbl&gt;, se_confirmed &lt;dbl&gt;,
+## #   n_countries &lt;int&gt;</code></pre>
+<p><em>These main data points I was looking at were grouped by Region and then anlyzed. The largest average calorie consumption from sugar came from the Americas, while the highest obesity rates came from Europe. The Americas had the highest average deaths from COVID (mean: 6948.6071, sd: 18153.822, se:3430.7498), while South-East Asia had the highest average confirmed COVID cases (mean: 229356.00, sd:511496.80, se: 180841.43). The variable ‘n’ and ‘n_countries’ refer to the amount of countries included in each of these regions. This number is not completely accurate though, as some of the countries were deleted from the dataset due to incomplete data.</em></p>
+</div>
+<div id="q4.-visualizations" class="section level1">
+<h1>Q4. Visualizations</h1>
+<div id="correlation-heatmap" class="section level2">
+<h2>Correlation heatmap</h2>
+<pre class="r"><code>#Correlation heatmap of all the numeric variables
+cases_select %&gt;% select_if(is.numeric) %&gt;%
+  cor %&gt;% 
+  as.data.frame %&gt;% 
+  rownames_to_column %&gt;% 
+  pivot_longer(-1) %&gt;% 
+  ggplot(aes(rowname,name,fill=value)) + 
+    geom_tile()+ geom_text(aes(label=round(value,2))) + 
+    xlab(&quot;&quot;) + 
+    ylab(&quot;&quot;) + 
+    coord_fixed() + 
+    theme(axis.text.x=element_text(angle=90, hjust=1, vjust=0.5),
+        text=element_text(size=10)) + 
+    scale_fill_gradient(low = &#39;dark orange&#39;, high = &#39;dark red&#39;)</code></pre>
+<p><img src="/post/project1_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" />
+<em>Graph #1 is a correlation heatmap to show the correlations between all the numeric variables. Besides Deaths and Confirmed cases, the two strongest positive correlations are between Animal Products and Alcohol, and Animal Products and Obesity. The majority of the relationships had either weak positive, or negative correlations.</em></p>
+</div>
+<div id="graph-2" class="section level2">
+<h2>Graph #2</h2>
+<pre class="r"><code>ggplot(cases_select, aes(x = Country, y = Obesity, fill = Region)) +
+  geom_bar(stat=&quot;summary&quot;, fun=mean) +
+  theme(axis.text.x = element_text(angle= 90, hjust=1)) +
+  ggtitle(&quot;Obesity Rates Per Country&quot;) + 
+  scale_fill_brewer(palette = &#39;Greens&#39;)</code></pre>
+<p><img src="/post/project1_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># ggplot(cases_select, aes(x = Obesity, fill = Region)) +
+#   geom_density(alpha=.75) +
+#   ggtitle(&quot;Obesity per WHO Region&quot;) +
+#   xlab(&quot;WHO Region&quot;) +
+#   ylab(&quot;Obesity Density&quot;)</code></pre>
+<p><em>This graph highlights the obesity rates in the different countries. The graph is color coded with the 6 WHO recognized regions. The highest obesity rates appear to be in the Americas and Europe, however some countries in other regions also have higher obesity rates. The lowest rates seem to be in South-East Asia. </em></p>
+</div>
+<div id="graph-3" class="section level2">
+<h2>Graph #3</h2>
+<pre class="r"><code>options(scipen = 999)
+ggplot(data = cases_select, aes(x = Confirmed, y = Deaths)) + 
+  geom_point(aes(color = Region, size = Alcohol)) + 
+  theme(axis.text.x = element_text(angle= 45, hjust=1)) +
+  ggtitle(&quot;Confirmed COVID Cases vs. Deaths per Region&quot;) +
+  xlab(&quot;Confirmed Cases&quot;) +
+  ylab(&quot;Deaths&quot;) +
+  scale_x_log10(n.breaks = 15) +
+  scale_y_log10(n.breaks = 15) </code></pre>
+<p><img src="/post/project1_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" />
+<em>In Graph #3, Confirmed cases vs Deaths are being analyzed between the different regions. The scale for the graph was changed in order to show all the points in the dataset. From this graph, it appears that the regions that had the highest confirmed cases and deaths were Europe and the Americas (excluding the US). While the other regions do have countries that have a higher than average death/confirmed count, the majority of the high measurements come from the two regions mentioned. The size of the dots were determine by the amount of calories consumed from alcohol. It also appears that Europe had the high alcohol consumptions, with America being the second largest.</em></p>
+</div>
+</div>
+<div id="q5.-perform-pam" class="section level1">
+<h1>Q5. Perform PAM</h1>
+<pre class="r"><code>#load the cluster package
+pam_cases &lt;- cases_select %&gt;% select(&#39;Confirmed&#39;, &#39;Deaths&#39;, &#39;Alcohol&#39;, &#39;Obesity&#39;, &#39;Sugar&#39;)
+
+#use the pam function
+pam1 &lt;- pam_cases %&gt;% pam(k=3)
+pam1</code></pre>
+<pre><code>## Medoids:
+##      ID Confirmed Deaths Alcohol Obesity  Sugar
+## [1,] 33      4881    139  2.7404    27.1 7.4753
+## [2,] 30    257101   8777  0.9856    22.1 9.5492
+## [3,] 64   1480073  33408  0.2582     3.8 3.5757
+## Clustering vector:
+##   [1] 1 1 1 1 2 1 1 1 1 2 1 1 1 1 1 1 1 1 3 1 1 1 1 1 1 1 1 2 1 2 1 1 1 1 1 1 1
+##  [38] 1 1 1 1 1 1 1 1 1 1 1 2 1 1 1 2 1 1 1 1 1 1 1 1 1 1 3 1 1 1 1 2 1 1 1 1 1
+##  [75] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1 1 2 1 1
+## [112] 1 1 1 1 1 2 1 1 1 1 1 2 2 1 1 1 1 1 1 1 1 1 1 2 1 1 1 2 1 1 1 1 1 1
+## Objective function:
+##    build     swap 
+## 29848.22 29529.83 
+## 
+## Available components:
+##  [1] &quot;medoids&quot;    &quot;id.med&quot;     &quot;clustering&quot; &quot;objective&quot;  &quot;isolation&quot; 
+##  [6] &quot;clusinfo&quot;   &quot;silinfo&quot;    &quot;diss&quot;       &quot;call&quot;       &quot;data&quot;</code></pre>
+<pre class="r"><code>#save cluster assignments to dataset and use them to color the points
+pamclust&lt;-pam_cases %&gt;% mutate(cluster=as.factor(pam1$clustering))
+pamclust %&gt;% ggplot(aes(Obesity, Deaths,color=cluster)) + geom_point() + ggtitle(&quot;PAM cluster graph: Obesity vs. Deaths&quot;)</code></pre>
+<p><img src="/post/project1_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" />
+<em>This graph shows the different clusters when we initially ran PAM with k=3. At this point, we do not know if 3 clusters is the optimal number for k, but this is just an initial run to test PAM on our data and see how it with with the data. </em></p>
+<pre class="r"><code>#summarize your clusters
+pamclust %&gt;% group_by(cluster) %&gt;% summarize_if(is.numeric,mean,na.rm=T)</code></pre>
+<pre><code>## # A tibble: 3 x 6
+##   cluster Confirmed Deaths Alcohol Obesity Sugar
+##   &lt;fct&gt;       &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+## 1 1          20275.   756.   1.33     17.9  4.74
+## 2 2         283635. 17097.   1.38     24.0  5.56
+## 3 3        1961224  60513    0.845    13.0  4.95</code></pre>
+<pre class="r"><code>#check final medoids
+cases_select %&gt;% slice(pam1$id.med)</code></pre>
+<pre><code>## # A tibble: 3 x 11
+##   Deaths Confirmed Alcohol Region Country `Animal Product… Sugar Fruit
+##    &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1    139      4881   2.74  Europe Croatia            14.7   7.48  1.51
+## 2   8777    257101   0.986 Ameri… Colomb…             8.85  9.55  4.69
+## 3  33408   1480073   0.258 South… India               5.56  3.58  1.43
+## # … with 3 more variables: Vegetables &lt;dbl&gt;, Obesity &lt;dbl&gt;, Fats &lt;dbl&gt;</code></pre>
+<pre class="r"><code>#check if cluster assignments is reflecting natural order
+pamclust %&gt;% mutate(region=cases_select$Region) %&gt;% ggplot(aes(Obesity, Deaths, color=region, shape=cluster))+geom_point(size=4)</code></pre>
+<p><img src="/post/project1_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" />
+<em>The first table is a summary of the average values for Confirmed, Deaths, Alcohol, Obesity, and Sugar for the 3 different cluster. The secoond table shows the final medoids, which are the countries and regions that best represent the clusters. The final graph check to see if the clusters fit the data points based on Regions. Since we weren’t including Region in our PAM analysis,and different countries within each region have very different amounts of COVID cases and deaths, I didn’t expect the clusters to really fit within the regions.</em></p>
+<pre class="r"><code>#get average silhouette width
+pam1$silinfo$avg.width</code></pre>
+<pre><code>## [1] 0.8527503</code></pre>
+<pre class="r"><code>plot(pam1,which=2)</code></pre>
+<p><img src="/post/project1_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><em>This graph shows the average silhouette width of our PAM analysis with 3 clusters. The value calculated was 0.85, indicating that a strong structure had been found.</em></p>
+<pre class="r"><code>#conduct Goodness-of-Fit to determine # of clusters
+pam_dat &lt;- pam_cases
+sil_width &lt;- vector()
+for(i in 2:10){
+  pam_fit &lt;- pam(pam_dat, k = i)
+  sil_width[i] &lt;- pam_fit$silinfo$avg.width
+}
+ggplot()+geom_line(aes(x=1:10,y=sil_width))+scale_x_continuous(name=&quot;k&quot;,breaks=1:10)</code></pre>
+<p><img src="/post/project1_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" />
+<em>In this chunk of code, I ran a for loop in order to determine the best number of clusters to use for my analysis. It was found that 3 clusters was the best number, as that had the greatest silhouette width with an average a litter greater than 0.85.</em></p>
+<pre class="r"><code>#visualize the clusters to find the strongest correlations
+cases_select %&gt;% mutate(cluster=as.factor(pam1$clustering)) %&gt;%
+  ggpairs(columns = c(&#39;Confirmed&#39;, &#39;Deaths&#39;, &#39;Alcohol&#39;, &#39;Obesity&#39;, &#39;Sugar&#39;), aes(color=&#39;red&#39;))</code></pre>
+<p><img src="/post/project1_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" />
+<em>Here I visualized the clusters to find the greatest correlation between variables. As expected, it was found that the strongest correlation was between Confirmed COVID cases and COVID deaths. Sugar, obesity, and alcohol also had a strong correlations with each other, which was also expected. There were weak correlations between Alcohol/Obesity/Sugar and Deaths/Confirmed, and a negative correlation between Alcohol and Confirmed. Overall, there seems to be no strong correlation between diet choices (the amount of calories consumed from alcohol and sugar), obesity, and deaths related to COVID-19.</em></p>
+<pre class="r"><code>#compute means of all numeric variables
+cases1 &lt;- pam_dat %&gt;% mutate(cluster=as.factor(pam1$clustering))
+cases1 %&gt;% group_by(cluster) %&gt;% summarize_all(mean,na.rm=T)</code></pre>
+<pre><code>## # A tibble: 3 x 6
+##   cluster Confirmed Deaths Alcohol Obesity Sugar
+##   &lt;fct&gt;       &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+## 1 1          20275.   756.   1.33     17.9  4.74
+## 2 2         283635. 17097.   1.38     24.0  5.56
+## 3 3        1961224  60513    0.845    13.0  4.95</code></pre>
+<pre class="r"><code>#show best projection of 5D data in 2D
+plot(pam1, which=1)</code></pre>
+<p><img src="/post/project1_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><em>In this final chunk of code, I again computed the average values for each of the numeric variables in each cluster. Finally, the plot visualizes how my 5D data was projected in 2D.</em></p>
+<pre><code>## R version 3.6.2 (2019-12-12)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS  10.16
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] cluster_2.1.0   GGally_2.0.0    forcats_0.5.0   stringr_1.4.0  
+##  [5] dplyr_1.0.2     purrr_0.3.4     readr_1.4.0     tidyr_1.1.2    
+##  [9] tibble_3.0.4    ggplot2_3.3.2   tidyverse_1.3.0
+## 
+## loaded via a namespace (and not attached):
+##  [1] tidyselect_1.1.0   xfun_0.20          haven_2.3.1        colorspace_2.0-0  
+##  [5] vctrs_0.3.5        generics_0.1.0     htmltools_0.5.0    yaml_2.2.1        
+##  [9] utf8_1.1.4         rlang_0.4.9        pillar_1.4.7       glue_1.4.2        
+## [13] withr_2.3.0        DBI_1.1.0          dbplyr_2.0.0       RColorBrewer_1.1-2
+## [17] modelr_0.1.8       readxl_1.3.1       plyr_1.8.6         lifecycle_0.2.0   
+## [21] munsell_0.5.0      blogdown_0.20      gtable_0.3.0       cellranger_1.1.0  
+## [25] rvest_0.3.6        evaluate_0.14      labeling_0.4.2     knitr_1.30        
+## [29] fansi_0.4.1        broom_0.7.2        Rcpp_1.0.5         scales_1.1.1      
+## [33] backports_1.2.0    jsonlite_1.7.1     farver_2.0.3       fs_1.5.0          
+## [37] hms_0.5.3          digest_0.6.27      stringi_1.5.3      bookdown_0.21     
+## [41] grid_3.6.2         cli_2.2.0          tools_3.6.2        magrittr_2.0.1    
+## [45] crayon_1.3.4       pkgconfig_2.0.3    ellipsis_0.3.1     xml2_1.3.2        
+## [49] reprex_0.3.0       lubridate_1.7.9.2  reshape_0.8.8      assertthat_0.2.1  
+## [53] rmarkdown_2.6      httr_1.4.2         rstudioapi_0.13    R6_2.5.0          
+## [57] compiler_3.6.2</code></pre>
+<pre><code>## [1] &quot;2021-01-16 21:06:44 CST&quot;</code></pre>
+<pre><code>##                                                                                            sysname 
+##                                                                                           &quot;Darwin&quot; 
+##                                                                                            release 
+##                                                                                           &quot;20.2.0&quot; 
+##                                                                                            version 
+## &quot;Darwin Kernel Version 20.2.0: Wed Dec  2 20:39:59 PST 2020; root:xnu-7195.60.75~1/RELEASE_X86_64&quot; 
+##                                                                                           nodename 
+##                                                                                            &quot;earth&quot; 
+##                                                                                            machine 
+##                                                                                           &quot;x86_64&quot; 
+##                                                                                              login 
+##                                                                                             &quot;root&quot; 
+##                                                                                               user 
+##                                                                                         &quot;piacadar&quot; 
+##                                                                                     effective_user 
+##                                                                                         &quot;piacadar&quot;</code></pre>
+</div>
+</div>
+        <div class="post-footer">
+            <div class="info">
+                
+                
+            </div>
+        </div>
+
+        
+    </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript"
+        src="/js/jquery.min.86b1e8f819ee2d9099a783e50b49dff24282545fc40773861f9126b921532e4c.js"
+        integrity="sha256-hrHo&#43;BnuLZCZp4PlC0nf8kKCVF/EB3OGH5EmuSFTLkw="
+        crossorigin="anonymous"></script>
+
+
+
+
+<script type="text/javascript"
+        src="/js/bundle.min.0f9c74cb78f13d1f15f33daff4037c70354f98acfbb97a6f61708966675c3cae.js"
+        integrity="sha256-D5x0y3jxPR8V8z2v9AN8cDVPmKz7uXpvYXCJZmdcPK4="
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript"
+        src="/js/medium-zoom.min.92f21c856129f84aeb719459b3e6ac621a3032fd7b180a18c04e1d12083f8aba.js"
+        integrity="sha256-kvIchWEp&#43;ErrcZRZs&#43;asYhowMv17GAoYwE4dEgg/iro="
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
