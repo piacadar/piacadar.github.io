@@ -26,6 +26,15 @@
     </item>
     
     <item>
+      <title>Decision Trees</title>
+      <link>/post/decisiontrees/decisiontrees/</link>
+      <pubDate>Fri, 20 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/decisiontrees/decisiontrees/</guid>
+      <description>This dataset is used to predict whether or not an image contains signs of diabetetic retinopathy. The variables used are the quality assessment, pre-screening that outputs 1 for severe retinal abnormality and 0 for lack of abnormality, the results of MA detection, the euclidean distance of the center of the macula and the center of the optic disc, the diameter of the optic disc, the AM/FM-based classification, and the class label.</description>
+    </item>
+    
+    <item>
       <title></title>
       <link>/archives/</link>
       <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
