@@ -27,10 +27,10 @@
     
     <item>
       <title>Decision Trees</title>
-      <link>/post/decisiontrees/decisiontrees/</link>
-      <pubDate>Fri, 20 Mar 2020 00:00:00 +0000</pubDate>
+      <link>/post/decisiontrees/</link>
+      <pubDate>Sat, 20 Mar 2010 00:00:00 +0000</pubDate>
       
-      <guid>/post/decisiontrees/decisiontrees/</guid>
+      <guid>/post/decisiontrees/</guid>
       <description>This dataset is used to predict whether or not an image contains signs of diabetetic retinopathy.</description>
     </item>
     

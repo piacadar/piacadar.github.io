@@ -26,15 +26,6 @@
     </item>
     
     <item>
-      <title>Decision Trees</title>
-      <link>/post/decisiontrees/decisiontrees/</link>
-      <pubDate>Fri, 20 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/post/decisiontrees/decisiontrees/</guid>
-      <description>This dataset is used to predict whether or not an image contains signs of diabetetic retinopathy.</description>
-    </item>
-    
-    <item>
       <title></title>
       <link>/archives/</link>
       <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
@@ -59,6 +50,15 @@
       
       <guid>/about/</guid>
       <description>Written in Go, Hugo is an open source static site generator available under the Apache Licence 2.</description>
+    </item>
+    
+    <item>
+      <title>Decision Trees</title>
+      <link>/post/decisiontrees/</link>
+      <pubDate>Sat, 20 Mar 2010 00:00:00 +0000</pubDate>
+      
+      <guid>/post/decisiontrees/</guid>
+      <description>This dataset is used to predict whether or not an image contains signs of diabetetic retinopathy.</description>
     </item>
     
   </channel>
