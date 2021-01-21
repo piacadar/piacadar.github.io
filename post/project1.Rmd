@@ -1,5 +1,5 @@
 ---
-title: "Wrangling & Exploratory Data Analysis"
+title: "The effects of obesity, alcohol consumption, and sugar consumption on COVID related deaths"
 author: "Pia Cadar"
 date: "2020-10-17"
 output: html_document

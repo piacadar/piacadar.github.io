@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme=""><head>
-    <title> Pia Cadar | Modeling, Inference, Prediction </title>
+    <title> Pia Cadar | ML models to predict if a married person has children based on gender, age, years married, and if they had an affair </title>
 
     
     <meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -52,7 +52,7 @@
     <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="/images/site-feature-image.png"/>
 
-<meta name="twitter:title" content="Modeling, Inference, Prediction"/>
+<meta name="twitter:title" content="ML models to predict if a married person has children based on gender, age, years married, and if they had an affair"/>
 <meta name="twitter:description" content="I chose the Affairs dataset. The main variables I will be looking at will be affairs, gender, age, and yearsmarried."/>
 
 </head>
@@ -142,7 +142,7 @@
         <div class="post-content">
             
             <div class="post-title">
-                <h3>Modeling, Inference, Prediction</h3>
+                <h3>ML models to predict if a married person has children based on gender, age, years married, and if they had an affair</h3>
                 
                     <div class="info">
                         <em class="fas fa-calendar-day"></em>
@@ -378,15 +378,15 @@ samp_distn&lt;-replicate(5000, {
 ## Estimated/boostrap SEs
 samp_distn %&gt;% t %&gt;% as.data.frame %&gt;% summarize_all(sd) </code></pre>
 <pre><code>##   (Intercept) yearsmarried gendermale yearsmarried:gendermale
-## 1    0.338004   0.05645538  0.6840794              0.09280049</code></pre>
+## 1   0.3340677    0.0551624   0.678293              0.09144325</code></pre>
 <pre class="r"><code>## Empirical 95% CI
 samp_distn %&gt;% t %&gt;% as.data.frame %&gt;% pivot_longer(1:3) %&gt;% group_by(name) %&gt;%
  summarize(lower=quantile(value,.025), upper=quantile(value,.975))</code></pre>
 <pre><code>## # A tibble: 3 x 3
 ##   name         lower upper
 ##   &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt;
-## 1 (Intercept)  20.0  21.4 
-## 2 gendermale    1.28  3.96
+## 1 (Intercept)  20.0  21.3 
+## 2 gendermale    1.33  4.00
 ## 3 yearsmarried  1.15  1.37</code></pre>
 <pre class="r"><code>#comparison of SEs
 ## Normal-theory SEs
@@ -416,7 +416,7 @@ coeftest(fit, vcov=vcovHC(fit))</code></pre>
 <pre class="r"><code>## Bootstrapped SEs (resampling rows)
 samp_distn%&gt;%t%&gt;%as.data.frame%&gt;%summarize_all(sd)</code></pre>
 <pre><code>##   (Intercept) yearsmarried gendermale yearsmarried:gendermale
-## 1    0.338004   0.05645538  0.6840794              0.09280049</code></pre>
+## 1   0.3340677    0.0551624   0.678293              0.09144325</code></pre>
 <p><em>The SEs between all the tests were similar, with Heteroskedasticity SEs begin in the middle and Bootstrapped SEs being the largest. While the p-values changed between the Normal-theory SEs and Heteroskedasticity SEs, they values were still significant.</em></p>
 </div>
 <div id="q5.-logistic-regression" class="section level2">
@@ -648,7 +648,7 @@ diags%&gt;%summarize_all(mean)</code></pre>
 ## [25] rio_0.5.16        pkgconfig_2.0.3   htmltools_0.5.0   dbplyr_2.0.0     
 ## [29] rlang_0.4.9       readxl_1.3.1      rstudioapi_0.13   shape_1.4.5      
 ## [33] generics_0.1.0    farver_2.0.3      jsonlite_1.7.1    zip_2.1.1        
-## [37] car_3.0-10        magrittr_2.0.1    Rcpp_1.0.5        munsell_0.5.0    
+## [37] car_3.0-10        magrittr_2.0.1    Rcpp_1.0.6        munsell_0.5.0    
 ## [41] fansi_0.4.1       abind_1.4-5       lifecycle_0.2.0   stringi_1.5.3    
 ## [45] yaml_2.2.1        carData_3.0-4     MASS_7.3-53       plyr_1.8.6       
 ## [49] grid_3.6.2        parallel_3.6.2    crayon_1.3.4      haven_2.3.1      
@@ -658,7 +658,7 @@ diags%&gt;%summarize_all(mean)</code></pre>
 ## [65] vctrs_0.3.5       cellranger_1.1.0  gtable_0.3.0      assertthat_0.2.1 
 ## [69] xfun_0.20         openxlsx_4.2.3    broom_0.7.2       survival_3.2-7   
 ## [73] iterators_1.0.13  cluster_2.1.0     ellipsis_0.3.1</code></pre>
-<pre><code>## [1] &quot;2021-01-16 21:07:24 CST&quot;</code></pre>
+<pre><code>## [1] &quot;2021-01-21 14:38:04 CST&quot;</code></pre>
 <pre><code>##                                                                                            sysname 
 ##                                                                                           &quot;Darwin&quot; 
 ##                                                                                            release 

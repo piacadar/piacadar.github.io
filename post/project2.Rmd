@@ -1,5 +1,5 @@
 ---
-title: "Modeling, Inference, Prediction"
+title: "ML models to predict if a married person has children based on gender, age, years married, and if they had an affair"
 author: "Pia Cadar"
 date: "2020-11-21"
 output: html_document

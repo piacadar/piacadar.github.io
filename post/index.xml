@@ -8,7 +8,7 @@
     <language>en</language>
     <lastBuildDate>Sat, 21 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Modeling, Inference, Prediction</title>
+      <title>ML models to predict if a married person has children based on gender, age, years married, and if they had an affair</title>
       <link>/post/project2/</link>
       <pubDate>Sat, 21 Nov 2020 00:00:00 +0000</pubDate>
       
@@ -17,7 +17,7 @@
     </item>
     
     <item>
-      <title>Wrangling &amp; Exploratory Data Analysis</title>
+      <title>The effects of obesity, alcohol consumption, and sugar consumption on COVID related deaths</title>
       <link>/post/project1/</link>
       <pubDate>Sat, 17 Oct 2020 00:00:00 +0000</pubDate>
       
